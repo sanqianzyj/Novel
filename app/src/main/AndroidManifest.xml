@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.hao.novel">
+    <!-- 用于自定义一个权限 -->
+    <!-- 声明一个新的权限 -->
+    <permission android:name="com.hao.MI" /> <!-- 使用一个新的权限 -->
+    <uses-permission android:name="com.hao.MI" /> <!--  -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+    <dist:module dist:instant="true" />
+
+    <application
+        android:name=".base.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/shuji_black"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/shuji_black"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme_nostatubar">
+        <activity
+            android:name=".ui.MainActivity"
+            android:theme="@style/AppTheme_statubar"></activity>
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".service.DownLoadNovelService" />
+    </application>
+
+</manifest>

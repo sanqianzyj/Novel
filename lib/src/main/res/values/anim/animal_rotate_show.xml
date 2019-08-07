@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Rotate： 旋转动画效果 -->
+    <rotate
+        android:duration="100"
+        android:fromDegrees="0"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toDegrees="+350" />
+    <!--
+    fromDegrees:动画起始时物件的角度
+    toDegrees:动画结束时物件旋转的角度 可以大于360度
+              当角度为负数——表示逆时针旋转
+              当角度为正数——表示顺时针旋转
+               (负数from——to正数:顺时针旋转)
+               (负数from——to负数:逆时针旋转)
+               (正数from——to正数:顺时针旋转)
+               (正数from——to负数:逆时针旋转)
+    pivotX；:为动画相对于物件的X、Y坐标的开始位置
+    pivotY: 为动画相对于物件的X、Y坐标的开始位置
+          50%为物件的X或Y方向坐标上的中点位置
+    -->
+
+</set><!--  interpolator 设置插值器   -->

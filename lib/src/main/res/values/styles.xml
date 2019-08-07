@@ -1,0 +1,53 @@
+<resources>
+    <item type="id" name="statusbarutil_fake_status_bar_view"/>
+    <item type="id" name="statusbarutil_translucent_view"/>
+    <!-- 圆形头像设置 -->
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ScorllTextView">
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="reference|color"/>
+        <attr name="lineSpacingExtra" format="dimension"/>
+        <attr name="wordSpaceExtra" format="dimension"/>
+        <attr name="paddingLeft" format="dimension"/>
+        <attr name="paddingRight" format="dimension"/>
+        <attr name="paddingTop" format="dimension"/>
+        <attr name="paddingBottom" format="dimension"/>
+        <attr name="padding" format="dimension"/>
+        <attr name="orientation_ver" format="boolean"/>
+        <attr name="needselftouch" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="NiceImageView">
+        <attr name="iscircle" format="boolean"/>
+        <attr name="iscoversrc" format="boolean"/>
+        <attr name="cornerradius" format="dimension"/>
+        <attr name="cornertopleftradius" format="dimension"/>
+        <attr name="cornertoprightradius" format="dimension"/>
+        <attr name="cornerbottomleftradius" format="dimension"/>
+        <attr name="cornerbottomrightradius" format="dimension"/>
+        <attr name="borderwidth" format="dimension"/>
+        <attr name="bordercolor" format="color"/>
+        <attr name="innerborderwidth" format="dimension"/>
+        <attr name="innerbordercolor" format="color"/>
+        <attr name="maskcolor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="CheekChangeButton">
+        <attr name="cheekcornerradius" format="dimension"/>
+        <attr name="cheekcornertopleftradius" format="dimension"/>
+        <attr name="cheekcornertoprightradius" format="dimension"/>
+        <attr name="cheekcornerbottomleftradius" format="dimension"/>
+        <attr name="cheekcornerbottomrightradius" format="dimension"/>
+        <attr name="cheekborderwidth" format="dimension"/>
+        <attr name="cheekbordercolor" format="color"/>
+        <attr name="cheekinnerborderwidth" format="dimension"/>
+        <attr name="cheekinnerbordercolor" format="color"/>
+        <attr name="cheekbackground" format="reference"/>
+        <attr name="cheekischeck" format="boolean"/>
+        <attr name="cheekinitbordercolor" format="color"/>
+    </declare-styleable>
+</resources>
