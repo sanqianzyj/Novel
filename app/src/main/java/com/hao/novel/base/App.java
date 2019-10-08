@@ -18,6 +18,8 @@ public class App extends MI2App {
     //用于控制数据库更新导致序列化 ID出现错误
     public static final long serialVersionUID = 1L;
     static App app;
+    DownLoadNovelBinder binder;
+
 
     private long updateTime = 0;
 
@@ -35,7 +37,6 @@ public class App extends MI2App {
     }
 
 
-
     private void startBackRunService() {
         Intent bindIntent = new Intent(this, DownLoadNovelService.class);
         bindService(bindIntent, connection, BIND_AUTO_CREATE);
@@ -49,7 +50,11 @@ public class App extends MI2App {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-
+            binder = (DownLoadNovelBinder) service;
+            if (binder != null) {
+                binder.sendCmd(DownLoadNovelService.NovelDownTag.noveltype);
+                binder.sendCmd(DownLoadNovelService.NovelDownTag.allTitle);
+            }
         }
     };
 

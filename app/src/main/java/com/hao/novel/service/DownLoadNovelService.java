@@ -43,7 +43,6 @@ public class DownLoadNovelService extends Service {
         long nowDownNum;//当前下载数
         DownListener downListener;
 
-
         @Override
         public void sendCmd(NovelDownTag o) {
             tag.add(o);
@@ -138,6 +137,9 @@ public class DownLoadNovelService extends Service {
                             break;
                         case novelallchaptercontent://下载所有小说的内容
                             break;
+                        case noveltype://获取小说分类
+                            SpiderNovelFromBiQu.getNovelType();
+                            break;
                     }
                     tag.remove(0);
                 }
@@ -201,7 +203,7 @@ public class DownLoadNovelService extends Service {
         super.dump(fd, writer, args);
     }
 
-    enum NovelDownTag {
-        none, allTitle, allDetail, novelallchapter, singlechaptercontent, novelallchaptercontent
+    public enum NovelDownTag {
+        none, allTitle, allDetail, novelallchapter, singlechaptercontent, novelallchaptercontent, noveltype
     }
 }

@@ -4,7 +4,9 @@ package com.hao.novel.spider;
 import android.util.Log;
 
 import com.hao.novel.db.manage.DbManage;
+import com.hao.novel.spider.SpiderUtils;
 import com.hao.novel.spider.data.NovelIntroduction;
+import com.hao.novel.spider.data.NovelType;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,21 +20,24 @@ import java.util.List;
 public class SpiderNovelFromBiQu {
     public static final String BiQuMainUrl = "http://www.xbiquge.la";
 
+    /**
+     * 获取所有小说信息
+     */
     public static void getAllNovel() {
-        Log.i("获取小说信息", "开始");
         String html = SpiderUtils.getHtml(BiQuMainUrl + "/xiaoshuodaquan/");
         Document doc = Jsoup.parse(html);
         Elements rows = doc.select("div[class=novellist]");
         Elements list = rows.select("li");
         List<NovelIntroduction> novelIntroductions = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
+            Elements elements = list.get(i).select("a");
             NovelIntroduction novelIntroduction = new NovelIntroduction();
-            novelIntroduction.setNovelNameAndAuthot(list.text());
-            novelIntroduction.setNovelChapterListUrl(list.attr("href"));
+            novelIntroduction.setNovelNameAndAuthot(elements.text());
+            novelIntroduction.setNovelChapterListUrl(elements.attr("href"));
             novelIntroductions.add(novelIntroduction);
+            Log.i("小说", "名称=" + novelIntroduction.getNovelNameAndAuthot() + "     主页地址：" + novelIntroduction.getNovelChapterListUrl());
         }
         DbManage.addNovelIntrodution(novelIntroductions);
-        Log.i("获取小说信息", "结束");
     }
 
 
@@ -51,25 +56,6 @@ public class SpiderNovelFromBiQu {
     }
 
 
-    /**
-     * 获取单个小说的当前信息
-     *
-     * @param html 章节对应的页面
-     * @return 小说章节列表
-     */
-    public static void getNovelDetail(String html) {
-        Document doc = Jsoup.parse(html);
-        Elements frist = doc.select("div[class=box_con]");
-        String url = frist.select("div#fmimg").select("img").attr("src");
-        String title = frist.select("div#maininfo").select("div#info").select("h1").text();
-        Elements someInfo = frist.select("div#maininfo").select("div#info").select("p");
-        String auther = someInfo.get(0).text();
-        String type = someInfo.get(1).text();
-        Elements lastChapter = someInfo.get(3).select("a");
-
-    }
-
-
     //用于URL的检测
     private static String CheckedUrl(String string) {
         if (string.startsWith("http")) {
@@ -77,6 +63,24 @@ public class SpiderNovelFromBiQu {
         } else {
             return BiQuMainUrl + string;
         }
+    }
+
+
+    public static void getNovelType() {
+        String html = SpiderUtils.getHtml(BiQuMainUrl);
+        Document doc = Jsoup.parse(html);
+        Elements rows = doc.select("div[class=nav]");
+        Elements type = rows.select("li");
+        List<NovelType> novelTypes = new ArrayList<>();
+        for (int i = 2; i < type.size() - 1; i++) {
+            NovelType novelType = new NovelType();
+            novelType.setFrom("0");
+            novelType.setType(type.get(i).select("a").text());
+            novelType.setUrl(type.get(i).select("a").attr("href"));
+            Log.i("小说分类", "类别：" + novelType.getType() + "   地址：" + novelType.getUrl());
+            novelTypes.add(novelType);
+        }
+        DbManage.addNovelType(novelTypes);
     }
 
 

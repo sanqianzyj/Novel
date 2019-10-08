@@ -1,25 +1,21 @@
 package com.hao.novel.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.animation.ValueAnimator;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.ChangeImageTransform;
-import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.core.view.ViewCompat;
 
 import com.hao.lib.base.MI2Activity;
 import com.hao.novel.R;
-import com.hao.novel.base.App;
 
 
 public class WelcomeActivity extends MI2Activity {
@@ -59,14 +55,25 @@ public class WelcomeActivity extends MI2Activity {
                 } else if (progress < 99) {
                     logo_advert.setVisibility(View.VISIBLE);
                 } else {
-                    startActivity(new Intent(WelcomeActivity.this, MainActivity.class),
-                            ActivityOptions.makeSceneTransitionAnimation(WelcomeActivity.this, novel_icon, "book").toBundle());
-                    //finish();
+                    gotoMain();
                 }
             }
         });
         valueAnimator.start();
     }
 
+
+    private void gotoMain() {
+        View novel_icon = findViewById(R.id.novel_icon);
+        ViewCompat.setTransitionName(novel_icon, "avatar");
+        Intent intent = new Intent(this, MainActivity.class);
+        Pair<View, String> pair1 = new Pair<>((View) novel_icon, ViewCompat.getTransitionName(novel_icon));
+        /**
+         *4、生成带有共享元素的Bundle，这样系统才会知道这几个元素需要做动画
+         */
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair1);
+        ActivityCompat.startActivity(this, intent, activityOptionsCompat.toBundle());
+
+    }
 
 }

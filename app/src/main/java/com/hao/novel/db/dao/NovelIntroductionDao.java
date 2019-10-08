@@ -52,7 +52,7 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
                 "\"NOVEL_INTRODUCE\" TEXT," + // 3: novelIntroduce
                 "\"NOVEL_NEW_CHAPTER_TITLE\" TEXT," + // 4: novelNewChapterTitle
                 "\"NOVEL_NEW_CHAPTER_URL\" TEXT UNIQUE ," + // 5: novelNewChapterUrl
-                "\"NOVEL_CHAPTER_LIST_URL\" TEXT);"); // 6: novelChapterListUrl
+                "\"NOVEL_CHAPTER_LIST_URL\" TEXT UNIQUE );"); // 6: novelChapterListUrl
     }
 
     /** Drops the underlying database table. */

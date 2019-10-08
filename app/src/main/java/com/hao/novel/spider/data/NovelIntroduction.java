@@ -23,6 +23,7 @@ public class NovelIntroduction {
     String novelNewChapterTitle;//最新章节
     @Unique
     String novelNewChapterUrl;//最新章节地址
+    @Unique
     String novelChapterListUrl;//章节列表地址
 
     @Generated(hash = 1086496346)

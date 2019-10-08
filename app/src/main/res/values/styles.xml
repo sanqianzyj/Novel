@@ -7,7 +7,7 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
         <item name="colorPrimaryDark">@color/black</item>
         <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <item name="android:windowBackground">@mipmap/bg_readbook_yellow</item>
+        <item name="android:windowBackground">@color/traslant</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentTransitions">false</item>
         <!-- specify shared element transitions -->
