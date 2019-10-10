@@ -32,10 +32,10 @@ public class SpiderNovelFromBiQu {
         for (int i = 0; i < list.size(); i++) {
             Elements elements = list.get(i).select("a");
             NovelIntroduction novelIntroduction = new NovelIntroduction();
-            novelIntroduction.setNovelNameAndAuthot(elements.text());
+            novelIntroduction.setNovelName(elements.text());
             novelIntroduction.setNovelChapterListUrl(elements.attr("href"));
             novelIntroductions.add(novelIntroduction);
-            Log.i("小说", "名称=" + novelIntroduction.getNovelNameAndAuthot() + "     主页地址：" + novelIntroduction.getNovelChapterListUrl());
+            Log.i("小说", "名称=" + novelIntroduction.getNovelName() + "     主页地址：" + novelIntroduction.getNovelChapterListUrl());
         }
         DbManage.addNovelIntrodution(novelIntroductions);
     }

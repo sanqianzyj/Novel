@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    //专场动画
+    //转场动画
     private void initTranslation() {
         ImageView book_icon = findViewById(R.id.book_icon);
         /**
@@ -76,6 +76,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         show_mune.setLayoutManager(linearLayoutManager);
         MuneAdapter muneAdapter = new MuneAdapter(this, false);
+        muneAdapter.setMuneAdapterListener(new MuneAdapter.MuneAdapterListener() {
+            @Override
+            public void animalInEnd() {
+
+            }
+
+            @Override
+            public void animalOutEnd() {
+                show_mune.setVisibility(View.GONE);
+            }
+        });
         show_mune.setAdapter(muneAdapter);
         book_icon.setOnClickListener(this);
     }

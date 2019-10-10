@@ -25,12 +25,14 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property NovelNameAndAuthot = new Property(1, String.class, "novelNameAndAuthot", false, "NOVEL_NAME_AND_AUTHOT");
-        public final static Property NovelCover = new Property(2, String.class, "novelCover", false, "NOVEL_COVER");
-        public final static Property NovelIntroduce = new Property(3, String.class, "novelIntroduce", false, "NOVEL_INTRODUCE");
-        public final static Property NovelNewChapterTitle = new Property(4, String.class, "novelNewChapterTitle", false, "NOVEL_NEW_CHAPTER_TITLE");
-        public final static Property NovelNewChapterUrl = new Property(5, String.class, "novelNewChapterUrl", false, "NOVEL_NEW_CHAPTER_URL");
-        public final static Property NovelChapterListUrl = new Property(6, String.class, "novelChapterListUrl", false, "NOVEL_CHAPTER_LIST_URL");
+        public final static Property NovelNameAndAutho = new Property(1, String.class, "novelNameAndAutho", false, "NOVEL_NAME_AND_AUTHO");
+        public final static Property NovelName = new Property(2, String.class, "novelName", false, "NOVEL_NAME");
+        public final static Property NovelAutho = new Property(3, String.class, "novelAutho", false, "NOVEL_AUTHO");
+        public final static Property NovelCover = new Property(4, String.class, "novelCover", false, "NOVEL_COVER");
+        public final static Property NovelIntroduce = new Property(5, String.class, "novelIntroduce", false, "NOVEL_INTRODUCE");
+        public final static Property NovelNewChapterTitle = new Property(6, String.class, "novelNewChapterTitle", false, "NOVEL_NEW_CHAPTER_TITLE");
+        public final static Property NovelNewChapterUrl = new Property(7, String.class, "novelNewChapterUrl", false, "NOVEL_NEW_CHAPTER_URL");
+        public final static Property NovelChapterListUrl = new Property(8, String.class, "novelChapterListUrl", false, "NOVEL_CHAPTER_LIST_URL");
     }
 
 
@@ -47,12 +49,14 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"NOVEL_INTRODUCTION\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NOVEL_NAME_AND_AUTHOT\" TEXT UNIQUE ," + // 1: novelNameAndAuthot
-                "\"NOVEL_COVER\" TEXT," + // 2: novelCover
-                "\"NOVEL_INTRODUCE\" TEXT," + // 3: novelIntroduce
-                "\"NOVEL_NEW_CHAPTER_TITLE\" TEXT," + // 4: novelNewChapterTitle
-                "\"NOVEL_NEW_CHAPTER_URL\" TEXT UNIQUE ," + // 5: novelNewChapterUrl
-                "\"NOVEL_CHAPTER_LIST_URL\" TEXT UNIQUE );"); // 6: novelChapterListUrl
+                "\"NOVEL_NAME_AND_AUTHO\" TEXT UNIQUE ," + // 1: novelNameAndAutho
+                "\"NOVEL_NAME\" TEXT," + // 2: novelName
+                "\"NOVEL_AUTHO\" TEXT," + // 3: novelAutho
+                "\"NOVEL_COVER\" TEXT," + // 4: novelCover
+                "\"NOVEL_INTRODUCE\" TEXT," + // 5: novelIntroduce
+                "\"NOVEL_NEW_CHAPTER_TITLE\" TEXT," + // 6: novelNewChapterTitle
+                "\"NOVEL_NEW_CHAPTER_URL\" TEXT UNIQUE ," + // 7: novelNewChapterUrl
+                "\"NOVEL_CHAPTER_LIST_URL\" TEXT UNIQUE );"); // 8: novelChapterListUrl
     }
 
     /** Drops the underlying database table. */
@@ -70,34 +74,44 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
             stmt.bindLong(1, id);
         }
  
-        String novelNameAndAuthot = entity.getNovelNameAndAuthot();
-        if (novelNameAndAuthot != null) {
-            stmt.bindString(2, novelNameAndAuthot);
+        String novelNameAndAutho = entity.getNovelNameAndAutho();
+        if (novelNameAndAutho != null) {
+            stmt.bindString(2, novelNameAndAutho);
+        }
+ 
+        String novelName = entity.getNovelName();
+        if (novelName != null) {
+            stmt.bindString(3, novelName);
+        }
+ 
+        String novelAutho = entity.getNovelAutho();
+        if (novelAutho != null) {
+            stmt.bindString(4, novelAutho);
         }
  
         String novelCover = entity.getNovelCover();
         if (novelCover != null) {
-            stmt.bindString(3, novelCover);
+            stmt.bindString(5, novelCover);
         }
  
         String novelIntroduce = entity.getNovelIntroduce();
         if (novelIntroduce != null) {
-            stmt.bindString(4, novelIntroduce);
+            stmt.bindString(6, novelIntroduce);
         }
  
         String novelNewChapterTitle = entity.getNovelNewChapterTitle();
         if (novelNewChapterTitle != null) {
-            stmt.bindString(5, novelNewChapterTitle);
+            stmt.bindString(7, novelNewChapterTitle);
         }
  
         String novelNewChapterUrl = entity.getNovelNewChapterUrl();
         if (novelNewChapterUrl != null) {
-            stmt.bindString(6, novelNewChapterUrl);
+            stmt.bindString(8, novelNewChapterUrl);
         }
  
         String novelChapterListUrl = entity.getNovelChapterListUrl();
         if (novelChapterListUrl != null) {
-            stmt.bindString(7, novelChapterListUrl);
+            stmt.bindString(9, novelChapterListUrl);
         }
     }
 
@@ -110,34 +124,44 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
             stmt.bindLong(1, id);
         }
  
-        String novelNameAndAuthot = entity.getNovelNameAndAuthot();
-        if (novelNameAndAuthot != null) {
-            stmt.bindString(2, novelNameAndAuthot);
+        String novelNameAndAutho = entity.getNovelNameAndAutho();
+        if (novelNameAndAutho != null) {
+            stmt.bindString(2, novelNameAndAutho);
+        }
+ 
+        String novelName = entity.getNovelName();
+        if (novelName != null) {
+            stmt.bindString(3, novelName);
+        }
+ 
+        String novelAutho = entity.getNovelAutho();
+        if (novelAutho != null) {
+            stmt.bindString(4, novelAutho);
         }
  
         String novelCover = entity.getNovelCover();
         if (novelCover != null) {
-            stmt.bindString(3, novelCover);
+            stmt.bindString(5, novelCover);
         }
  
         String novelIntroduce = entity.getNovelIntroduce();
         if (novelIntroduce != null) {
-            stmt.bindString(4, novelIntroduce);
+            stmt.bindString(6, novelIntroduce);
         }
  
         String novelNewChapterTitle = entity.getNovelNewChapterTitle();
         if (novelNewChapterTitle != null) {
-            stmt.bindString(5, novelNewChapterTitle);
+            stmt.bindString(7, novelNewChapterTitle);
         }
  
         String novelNewChapterUrl = entity.getNovelNewChapterUrl();
         if (novelNewChapterUrl != null) {
-            stmt.bindString(6, novelNewChapterUrl);
+            stmt.bindString(8, novelNewChapterUrl);
         }
  
         String novelChapterListUrl = entity.getNovelChapterListUrl();
         if (novelChapterListUrl != null) {
-            stmt.bindString(7, novelChapterListUrl);
+            stmt.bindString(9, novelChapterListUrl);
         }
     }
 
@@ -150,12 +174,14 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
     public NovelIntroduction readEntity(Cursor cursor, int offset) {
         NovelIntroduction entity = new NovelIntroduction( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // novelNameAndAuthot
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // novelCover
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // novelIntroduce
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // novelNewChapterTitle
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // novelNewChapterUrl
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // novelChapterListUrl
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // novelNameAndAutho
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // novelName
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // novelAutho
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // novelCover
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // novelIntroduce
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // novelNewChapterTitle
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // novelNewChapterUrl
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // novelChapterListUrl
         );
         return entity;
     }
@@ -163,12 +189,14 @@ public class NovelIntroductionDao extends AbstractDao<NovelIntroduction, Long> {
     @Override
     public void readEntity(Cursor cursor, NovelIntroduction entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setNovelNameAndAuthot(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setNovelCover(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setNovelIntroduce(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setNovelNewChapterTitle(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setNovelNewChapterUrl(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setNovelChapterListUrl(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setNovelNameAndAutho(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setNovelName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setNovelAutho(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setNovelCover(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setNovelIntroduce(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setNovelNewChapterTitle(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setNovelNewChapterUrl(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setNovelChapterListUrl(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     @Override

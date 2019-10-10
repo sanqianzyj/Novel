@@ -1,26 +1,34 @@
 package com.hao.novel.ui.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hao.novel.R;
+import com.hao.novel.base.App;
 import com.hao.novel.db.manage.DbManage;
+import com.hao.novel.spider.data.NovelIntroduction;
 import com.hao.novel.spider.data.NovelType;
 
+import org.w3c.dom.Text;
 
 import java.util.List;
 
-
-public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder> {
+/**
+ * 小说列表
+ */
+public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.MuneViewHolder> {
     Context context;
 
     /**
@@ -41,15 +49,13 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
     boolean isNeedLoadAnimal = true;
 
     MuneAdapterListener muneAdapterListener;
-    List<NovelType> novelTypes;
+    List<NovelIntroduction> novelIntroductions;
 
-    public MuneAdapter(Context context, boolean isNeedLoadAnimal) {
+    public NovelListAdapter(Context context, boolean isNeedLoadAnimal) {
         this.context = context;
         if (isNeedLoadAnimal) {
             isOpen = true;
         }
-        novelTypes = DbManage.getNovelType();
-        count = novelTypes == null ? 0 : novelTypes.size();
     }
 
 
@@ -60,7 +66,7 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
     @NonNull
     @Override
     public MuneViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MuneViewHolder(LayoutInflater.from(context).inflate(R.layout.mune_item, null));
+        return new MuneViewHolder(LayoutInflater.from(context).inflate(R.layout.novel_list_item, null));
     }
 
     @Override
@@ -68,7 +74,7 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
         if (isNeedLoadAnimal) {
             startAnimal(holder, position);
         }
-        holder.setDate(novelTypes.get(position));
+        holder.setDate(novelIntroductions.get(position));
     }
 
     @Override
@@ -85,16 +91,25 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
 
     class MuneViewHolder extends RecyclerView.ViewHolder {
         View view;
-        TextView text;
+        ImageView novel_avatar;
+        TextView novel_name;
+        TextView novel_author;
+        TextView novel_new;
 
         public MuneViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
-            text = view.findViewById(R.id.title);
+            novel_avatar = view.findViewById(R.id.novel_avatar);
+            novel_name = view.findViewById(R.id.novel_name);
+            novel_author = view.findViewById(R.id.novel_author);
+            novel_new = view.findViewById(R.id.novel_new);
         }
 
-        public void setDate(NovelType novelType) {
-            text.setText(novelType.getType());
+        public void setDate(NovelIntroduction novelIntroductions) {
+            Glide.with(App.getInstance()).load(novelIntroductions.getNovelCover()).error(R.mipmap.novel_normal_cover).into(novel_avatar);
+            novel_name.setText(novelIntroductions.getNovelNameAndAuthot());
+            novel_author.setText(novelIntroductions.getNovelNameAndAuthot());
+            novel_new.setText();
         }
     }
 

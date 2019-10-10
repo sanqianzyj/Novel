@@ -46,6 +46,7 @@
             android:id="@+id/show_mune"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/gray_11"
             android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
 
