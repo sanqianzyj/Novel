@@ -1,9 +1,0 @@
-<resources>
-    <item type="id" name="statusbarutil_fake_status_bar_view" />
-    <item type="id" name="statusbarutil_translucent_view" />
-    <!-- 圆形头像设置 -->
-    <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-    </declare-styleable>
-</resources>

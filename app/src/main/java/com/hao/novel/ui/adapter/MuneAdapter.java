@@ -41,6 +41,7 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
     boolean isNeedLoadAnimal = true;
 
     MuneAdapterListener muneAdapterListener;
+    View.OnClickListener onClickListener;
     List<NovelType> novelTypes;
 
     public MuneAdapter(Context context, boolean isNeedLoadAnimal) {
@@ -52,6 +53,10 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
         count = novelTypes == null ? 0 : novelTypes.size();
     }
 
+
+    public NovelType getItem(int i) {
+        return novelTypes.get(i);
+    }
 
     public boolean isOpen() {
         return isOpen;
@@ -68,7 +73,7 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
         if (isNeedLoadAnimal) {
             startAnimal(holder, position);
         }
-        holder.setDate(novelTypes.get(position));
+        holder.setDate(novelTypes.get(position), position, onClickListener);
     }
 
     @Override
@@ -83,6 +88,10 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
         }
     }
 
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
     class MuneViewHolder extends RecyclerView.ViewHolder {
         View view;
         TextView text;
@@ -93,8 +102,10 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
             text = view.findViewById(R.id.title);
         }
 
-        public void setDate(NovelType novelType) {
+        public void setDate(NovelType novelType, int position, View.OnClickListener onClickListener) {
             text.setText(novelType.getType());
+            view.setTag(position);
+            view.setOnClickListener(onClickListener);
         }
     }
 
@@ -104,6 +115,7 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
 
     public interface MuneAdapterListener {
         void animalInEnd();
+
         void animalOutEnd();
     }
 

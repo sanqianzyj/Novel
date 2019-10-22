@@ -1,8 +1,6 @@
 package com.hao.novel.spider.data;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -17,89 +15,146 @@ public class NovelIntroduction {
     @Id(autoincrement = true)
     Long id;
     @Unique
-    String novelNameAndAutho;//小说名及作者 中间用>.<隔开
-    String novelName;//小说名及作者 中间用>.<隔开
-    String novelAutho;//小说名及作者 中间用>.<隔开
+    String novelName;//小说名
+    String novelAutho;//作者
     String novelCover;//封面
     String novelIntroduce;//文字介绍
+    String novelType;//小说类型
     String novelNewChapterTitle;//最新章节
-    @Unique
     String novelNewChapterUrl;//最新章节地址
     @Unique
     String novelChapterListUrl;//章节列表地址
-    @Generated(hash = 1888510405)
-    public NovelIntroduction(Long id, String novelNameAndAutho, String novelName,
-            String novelAutho, String novelCover, String novelIntroduce,
+    boolean isComplete;//信息是否完善
+
+
+
+    @Generated(hash = 2121122800)
+    public NovelIntroduction(Long id, String novelName, String novelAutho,
+            String novelCover, String novelIntroduce, String novelType,
             String novelNewChapterTitle, String novelNewChapterUrl,
-            String novelChapterListUrl) {
+            String novelChapterListUrl, boolean isComplete) {
         this.id = id;
-        this.novelNameAndAutho = novelNameAndAutho;
         this.novelName = novelName;
         this.novelAutho = novelAutho;
         this.novelCover = novelCover;
         this.novelIntroduce = novelIntroduce;
+        this.novelType = novelType;
         this.novelNewChapterTitle = novelNewChapterTitle;
         this.novelNewChapterUrl = novelNewChapterUrl;
         this.novelChapterListUrl = novelChapterListUrl;
+        this.isComplete = isComplete;
     }
+
+
     @Generated(hash = 1432430798)
     public NovelIntroduction() {
     }
+
+
+
+    @Override
+    public String toString() {
+        return "NovelIntroduction{" +
+                "小说名='" + novelName + '\n' +
+                ", 作者='" + novelAutho + '\n' +
+                ", 封面='" + novelCover + '\n' +
+                ", 小说类型='" + novelType + '\n' +
+                ", 介绍='" + novelIntroduce + '\n' +
+                ", 最新章节='" + novelNewChapterTitle + '\n' +
+                ", 最新章节地址='" + novelNewChapterUrl + '\n' +
+                ", 章节列表地址='" + novelChapterListUrl + '\n' +
+                ", 信息是否完善='" + isComplete + '\n' +
+                '}';
+    }
+
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
-    public String getNovelNameAndAutho() {
-        return this.novelNameAndAutho;
-    }
-    public void setNovelNameAndAutho(String novelNameAndAutho) {
-        this.novelNameAndAutho = novelNameAndAutho;
-    }
+
     public String getNovelName() {
         return this.novelName;
     }
+
     public void setNovelName(String novelName) {
         this.novelName = novelName;
     }
+
     public String getNovelAutho() {
         return this.novelAutho;
     }
+
     public void setNovelAutho(String novelAutho) {
         this.novelAutho = novelAutho;
     }
+
     public String getNovelCover() {
         return this.novelCover;
     }
+
     public void setNovelCover(String novelCover) {
         this.novelCover = novelCover;
     }
+
     public String getNovelIntroduce() {
         return this.novelIntroduce;
     }
+
     public void setNovelIntroduce(String novelIntroduce) {
         this.novelIntroduce = novelIntroduce;
     }
+
     public String getNovelNewChapterTitle() {
         return this.novelNewChapterTitle;
     }
+
     public void setNovelNewChapterTitle(String novelNewChapterTitle) {
         this.novelNewChapterTitle = novelNewChapterTitle;
     }
+
     public String getNovelNewChapterUrl() {
         return this.novelNewChapterUrl;
     }
+
     public void setNovelNewChapterUrl(String novelNewChapterUrl) {
         this.novelNewChapterUrl = novelNewChapterUrl;
     }
+
     public String getNovelChapterListUrl() {
         return this.novelChapterListUrl;
     }
+
     public void setNovelChapterListUrl(String novelChapterListUrl) {
         this.novelChapterListUrl = novelChapterListUrl;
     }
 
 
+    public boolean getIsComplete() {
+        return this.isComplete;
+    }
 
+
+    public void setIsComplete(boolean isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    public String getNovelType() {
+        return novelType;
+    }
+
+    public void setNovelType(String novelType) {
+        this.novelType = novelType;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
+    }
 }

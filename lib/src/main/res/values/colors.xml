@@ -2,10 +2,8 @@
 <resources>
 
     <color name="white">#ffffff</color>
-
     <color name="traslant">#00000000</color>
     <color name="black">#000000</color>
-
     <color name="app">#C5C1AA</color>
     <color name="gray_55">#55454545</color>
     <color name="gray_dd">#DD454545</color>
@@ -17,4 +15,6 @@
     <color name="black_44">#44000000</color>
     <color name="white_99">#99ffffff</color>
     <color name="red">#fa2108</color>
+    <color name="transparent">#00000000</color>
+
 </resources>

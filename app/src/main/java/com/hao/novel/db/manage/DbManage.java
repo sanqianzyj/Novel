@@ -1,8 +1,12 @@
 package com.hao.novel.db.manage;
 
+import android.util.Log;
+
 import com.hao.novel.base.NovelContent;
+import com.hao.novel.db.dao.NovelChapterDao;
 import com.hao.novel.db.dao.NovelIntroductionDao;
 import com.hao.novel.db.dao.NovelTypeDao;
+import com.hao.novel.spider.data.NovelChapter;
 import com.hao.novel.spider.data.NovelIntroduction;
 import com.hao.novel.spider.data.NovelType;
 
@@ -48,13 +52,13 @@ public class DbManage {
         return DBCore.getDaoSession().getNovelTypeDao().queryBuilder().where(NovelTypeDao.Properties.From.eq(NovelContent.from)).list();
     }
 
-    /**
-     * 获取小说数量
-     */
-    public long getNovelIntrodutionCount() {
-        return DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().count();
+    public static void addNovelChapter(List<NovelChapter> chapters) {
+        DBCore.getDaoSession().getNovelChapterDao().insertOrReplaceInTx(chapters);
     }
 
+    public static void updateNovelChapter(NovelChapter chapters) {
+        DBCore.getDaoSession().getNovelChapterDao().insertOrReplaceInTx(chapters);
+    }
 
     /**
      * 通过章节列表地址来区分小说
@@ -65,5 +69,27 @@ public class DbManage {
     public static NovelIntroduction checkNovelIntrodutionByUrl(String url) {
         return DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(
                 NovelIntroductionDao.Properties.NovelChapterListUrl.eq(url)).limit(1).unique();
+    }
+
+
+    public static List<NovelIntroduction> getAllNovelNoDetail() {
+        return DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().list();
+    }
+
+    //获取单个未完成详细信息的小说
+    public static NovelIntroduction getNoCompleteDetailNovelInfo() {
+        return DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.IsComplete.eq(false)).limit(1).unique();
+    }
+
+    //查询单个未加载的章节内容
+    public static NovelChapter checkNovelAllNoChapterContent(NovelIntroduction novelIntroduction) {
+        return DBCore.getDaoSession().getNovelChapterDao().queryBuilder().where(NovelChapterDao.Properties.Nid.eq(novelIntroduction.getId()), NovelChapterDao.Properties.IsComplete.eq(false)).limit(1).unique();
+    }
+
+    public static List<NovelIntroduction> getNovelByType(String type, int page) {
+        Log.i("小说","查询"+type);
+        List<NovelIntroduction> introductions=  DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.NovelType.like("%"+type+"%")).list();
+        Log.i("小说","查询="+introductions.size());
+        return introductions;
     }
 }

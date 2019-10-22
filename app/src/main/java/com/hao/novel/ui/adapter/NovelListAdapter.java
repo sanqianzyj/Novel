@@ -46,7 +46,13 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
     /**
      * 是否需要动画
      */
-    boolean isNeedLoadAnimal = true;
+    boolean isNeedLoadAnimal = false;
+
+    /**
+     * 当前显示的小说列表页数 30本为一页 同步加载网页
+     */
+    //TODO 通过加载的网页进行控制
+    int page=0;
 
     MuneAdapterListener muneAdapterListener;
     List<NovelIntroduction> novelIntroductions;
@@ -56,6 +62,16 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
         if (isNeedLoadAnimal) {
             isOpen = true;
         }
+    }
+
+
+    public void setDate(List<NovelIntroduction> novelIntroductions) {
+        this.novelIntroductions = novelIntroductions;
+    }
+
+
+    public NovelIntroduction getItem(int i) {
+        return novelIntroductions.get(i);
     }
 
 
@@ -89,6 +105,15 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
         }
     }
 
+    public void notifyData(String type) {
+        if(page>=0){
+            novelIntroductions=DbManage.getNovelByType(type,page);
+            count=novelIntroductions.size();
+        }
+        notifyDataSetChanged();
+    }
+
+
     class MuneViewHolder extends RecyclerView.ViewHolder {
         View view;
         ImageView novel_avatar;
@@ -107,9 +132,9 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
 
         public void setDate(NovelIntroduction novelIntroductions) {
             Glide.with(App.getInstance()).load(novelIntroductions.getNovelCover()).error(R.mipmap.novel_normal_cover).into(novel_avatar);
-            novel_name.setText(novelIntroductions.getNovelNameAndAuthot());
-            novel_author.setText(novelIntroductions.getNovelNameAndAuthot());
-            novel_new.setText();
+            novel_name.setText(novelIntroductions.getNovelName());
+            novel_author.setText("作者：" + novelIntroductions.getNovelAutho());
+            novel_new.setText("最新章节：" + novelIntroductions.getNovelNewChapterTitle());
         }
     }
 
@@ -119,6 +144,7 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
 
     public interface MuneAdapterListener {
         void animalInEnd();
+
         void animalOutEnd();
     }
 
@@ -188,4 +214,6 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
             }
         }, isOpen ? position * 100 : (count - position - 1) * 100);
     }
+
+
 }

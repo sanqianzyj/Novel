@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
 import com.hao.novel.db.dao.DaoMaster;
 import com.hao.novel.db.dao.NovelIntroductionDao;
+import com.hao.novel.db.dao.NovelTypeDao;
+import com.hao.novel.spider.data.NovelType;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -17,7 +19,7 @@ import org.greenrobot.greendao.database.Database;
  */
 
 
-public class DBHelper extends DaoMaster.OpenHelper {
+public class DBHelper extends DaoMaster.DevOpenHelper {
 
     DBHelper(Context context, String name) {
         super(context, name);
@@ -42,7 +44,8 @@ public class DBHelper extends DaoMaster.OpenHelper {
                         DaoMaster.dropAllTables(db, ifExists);
                     }
                 },
-                NovelIntroductionDao.class
+                NovelIntroductionDao.class,
+                NovelTypeDao.class
                 );
     }
 }

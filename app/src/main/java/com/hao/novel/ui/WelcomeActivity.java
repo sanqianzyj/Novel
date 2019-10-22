@@ -1,8 +1,10 @@
 package com.hao.novel.ui;
 
+import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,6 +18,7 @@ import androidx.core.view.ViewCompat;
 
 import com.hao.lib.base.MI2Activity;
 import com.hao.novel.R;
+
 
 
 public class WelcomeActivity extends MI2Activity {
@@ -38,6 +41,13 @@ public class WelcomeActivity extends MI2Activity {
         novel_icon = findViewById(R.id.novel_icon);
         logo_text = findViewById(R.id.logo_text);
         logo_advert = findViewById(R.id.logo_advert);
+
+        String[] promissions = new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission_group.CAMERA,
+        };
+        initPromission(promissions);
     }
 
     private void startAnimal() {
@@ -66,14 +76,13 @@ public class WelcomeActivity extends MI2Activity {
     private void gotoMain() {
         View novel_icon = findViewById(R.id.novel_icon);
         ViewCompat.setTransitionName(novel_icon, "avatar");
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MiBookActivity.class);
         Pair<View, String> pair1 = new Pair<>((View) novel_icon, ViewCompat.getTransitionName(novel_icon));
         /**
          *4、生成带有共享元素的Bundle，这样系统才会知道这几个元素需要做动画
          */
         ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair1);
         ActivityCompat.startActivity(this, intent, activityOptionsCompat.toBundle());
-
     }
 
 }

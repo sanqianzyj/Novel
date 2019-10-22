@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hao.lib.R;
 import com.hao.lib.Util.ImageUtils;
-import com.hao.lib.Util.StatusBarUtil;
 import com.hao.lib.Util.SystemUtil;
 import com.hao.lib.base.theme.AppThemeSetting;
 

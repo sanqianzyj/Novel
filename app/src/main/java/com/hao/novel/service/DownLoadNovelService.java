@@ -16,8 +16,12 @@ import androidx.annotation.RequiresApi;
 
 import com.hao.novel.R;
 import com.hao.novel.base.App;
+import com.hao.novel.db.manage.DbManage;
 import com.hao.novel.spider.SpiderNovelFromBiQu;
-import com.hao.novel.ui.MainActivity;
+import com.hao.novel.spider.data.NovelChapter;
+import com.hao.novel.spider.data.NovelIntroduction;
+import com.hao.novel.spider.data.NovelType;
+import com.hao.novel.ui.SearchBookActivity;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -31,7 +35,32 @@ import java.util.List;
 public class DownLoadNovelService extends Service {
     Thread downloadThread;
     boolean isRunThread = true;
-    List<NovelDownTag> tag = new ArrayList<>();
+    List<NovolDownTask> tag = new ArrayList<NovolDownTask>() {
+        @Override
+        public boolean add(NovolDownTask novolDownTask) {
+            if (novolDownTask.novelDownTag.equals(NovelDownTag.novelDetail)
+                    || novolDownTask.novelDownTag.equals(NovelDownTag.novelallchapterTitle)
+                    || novolDownTask.novelDownTag.equals(NovelDownTag.novelallchaptercontent)) {
+                if (!(novolDownTask.object instanceof NovelIntroduction)) {
+                    throw new NumberFormatException("添加任务异常，类型不匹配 novolDownTask.object 不是 NovelIntroduction类型");
+                }
+            } else if (novolDownTask.novelDownTag.equals(NovelDownTag.singlechaptercontent)) {
+                if (!(novolDownTask.object instanceof NovelChapter)) {
+                    throw new NumberFormatException("添加任务异常，类型不匹配 novolDownTask.object 不是 NovelChapter¬类型");
+                }
+            }
+            return super.add(novolDownTask);
+        }
+
+        @Override
+        public String toString() {
+            String cont = "暂无内容";
+            for (int i = 0; i < this.size(); i++) {
+                cont = cont + "     " + get(i).novelDownTag;
+            }
+            return cont;
+        }
+    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -39,47 +68,37 @@ public class DownLoadNovelService extends Service {
     }
 
     DownLoadNovelBinder binder = new DownLoadNovelBinder() {
-        long downAllNum;//下载的总数量
-        long nowDownNum;//当前下载数
-        DownListener downListener;
+
 
         @Override
-        public void sendCmd(NovelDownTag o) {
+        public void sendCmd(NovolDownTask o) {
             tag.add(o);
         }
 
         @Override
-        public void sendCmd(NovelDownTag o, int index) {
+        public void sendCmd(NovolDownTask o, int index) {
             try {
+                Log.i("小说","添加任务="+o.getNovelDownTag());
                 tag.add(index, o);
             } catch (Exception e) {
                 tag.add(o);
             }
         }
 
+
         @Override
         public Object getMassage() {
             Log.i("DownLoadNovelService", "getMassage: ");
             return null;
-        }
-
-        @Override
-        public void setDownListener(DownListener downListener) {
-            this.downListener = downListener;
-        }
-
-        public DownListener getDownListener() {
-            return downListener;
         }
     };
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onCreate() {
-        Log.i("DownLoadNovelService", "onCreate");
         super.onCreate();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent notificationIntent = new Intent(this, MainActivity.class);
+        Intent notificationIntent = new Intent(this, SearchBookActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
         Notification.Builder builder = new Notification.Builder(this)
@@ -123,24 +142,47 @@ public class DownLoadNovelService extends Service {
                     break;
                 }
                 if (tag.size() > 0) {
-                    switch (tag.get(0)) {
+                    if (tag.get(0).downListener != null) {
+                        tag.get(0).downListener.startDown();
+                    }
+                    Log.i("小说", "当前执行任务" + tag.get(0).getNovelDownTag() + "    任务数:" + tag.size() + "  任务列表：" + tag.toString());
+                    switch (tag.get(0).getNovelDownTag()) {
                         case none://不做任何操作
                             break;
                         case allTitle://下载所有的小说标题
                             SpiderNovelFromBiQu.getAllNovel();
+                            tag.add(new NovolDownTask(NovelDownTag.allDetail, ""));
                             break;
                         case allDetail://完善所有的小说的介绍信息
+                            NovelIntroduction novelIntroduction = DbManage.getNoCompleteDetailNovelInfo();
+                            if (novelIntroduction != null) {
+                                SpiderNovelFromBiQu.getAllNovelDetailInfo(novelIntroduction);
+                            }
                             break;
-                        case novelallchapter://下载单本小说的所有章节
+                        case novelDetail://下载单本小说的信息
+                            SpiderNovelFromBiQu.getAllNovelDetailInfo((NovelIntroduction) tag.get(0).getObject());
+                            break;
+                        case novelallchapterTitle://下载单本小说的所有章节
+                            SpiderNovelFromBiQu.getNovelAllChapterTitle((NovelIntroduction) tag.get(0).getObject());
                             break;
                         case singlechaptercontent://下载单章内容
+                            SpiderNovelFromBiQu.getNovelContent((NovelChapter) tag.get(0).getObject());
                             break;
-                        case novelallchaptercontent://下载所有小说的内容
+                        case novelallchaptercontent://下载小说的所有内容
+                            SpiderNovelFromBiQu.getAllNovelContent((NovelIntroduction) tag.get(0).getObject());
                             break;
                         case noveltype://获取小说分类
                             SpiderNovelFromBiQu.getNovelType();
                             break;
+                        case noveltypelist://通过类别来获取小说列表
+                            NovelType novelType = (NovelType) tag.get(0).getObject();
+                            SpiderNovelFromBiQu.getTypeNovelList(novelType.getUrl(), novelType.getType());
+                            break;
                     }
+                    if (tag.get(0).downListener != null) {
+                        tag.get(0).downListener.endDown();
+                    }
+                    Log.i("小说","删除任务="+tag.get(0).getNovelDownTag());
                     tag.remove(0);
                 }
             }
@@ -204,6 +246,8 @@ public class DownLoadNovelService extends Service {
     }
 
     public enum NovelDownTag {
-        none, allTitle, allDetail, novelallchapter, singlechaptercontent, novelallchaptercontent, noveltype
+        none, allTitle, allDetail, novelDetail, novelallchapterTitle, singlechaptercontent, novelallchaptercontent, noveltype, noveltypelist
     }
+
+
 }
