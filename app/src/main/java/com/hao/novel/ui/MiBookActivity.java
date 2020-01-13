@@ -6,25 +6,39 @@ import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
 import android.transition.Fade;
+import android.transition.Transition;
 import android.transition.TransitionSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.hao.lib.Util.StatusBarUtil;
+import com.hao.lib.Util.ToastUtils;
+import com.hao.lib.base.AppUtils;
 import com.hao.novel.R;
+import com.hao.novel.base.App;
+import com.hao.novel.base.BaseActivity;
 
-public class MiBookActivity extends AppCompatActivity implements View.OnClickListener {
+public class MiBookActivity extends BaseActivity implements View.OnClickListener {
+    long fristBack = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.gray_11));
-        setContentView(R.layout.activity_mi_book);
+        App.getInstance().addActivity(this);
+        LinearLayout view = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.activity_mi_book, null);
+        view.setPadding(0, AppUtils.getStatusBarHeight(this), 0, 0);
+        setContentView(view);
         initTranslation();
-
         initView();
     }
 
@@ -57,11 +71,20 @@ public class MiBookActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.shop:
-                startActivity(new Intent(this,SearchBookActivity.class));
+                startActivity(new Intent(this, SearchBookActivity.class));
                 break;
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - fristBack < 2000) {
+            App.getInstance().finishAll();
+        } else {
+            fristBack = System.currentTimeMillis();
+            ToastUtils.INSTANCE.showMessage("再次点击退出");
+        }
     }
 }

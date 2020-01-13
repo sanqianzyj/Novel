@@ -48,28 +48,36 @@ public class SpiderNovelFromBiQu {
 
     public static void getAllNovelDetailInfo(NovelIntroduction novelIntroduction) {
         String htmlNovelChapterList = SpiderUtils.getHtml(novelIntroduction.getNovelChapterListUrl());
+        getAllNovelDetailInfo(novelIntroduction, htmlNovelChapterList);
+//        getNovelAllChapterTitle(novelIntroduction);
+    }
+
+    //通过小说详情
+    public static void getAllNovelDetailInfo(NovelIntroduction novelIntroduction, String html) {
+        String htmlNovelChapterList = html;
         Document htmlNovelChapterListDoc = Jsoup.parse(htmlNovelChapterList);
         novelIntroduction.setNovelAutho(htmlNovelChapterListDoc.select("div#info").select("p").get(0).text().replace("作", "").replace("者", "").replace("：", "").replace(" ", ""));
-        novelIntroduction.setNovelCover(htmlNovelChapterListDoc.select("div#fming").select("img").attr("src"));
+        novelIntroduction.setNovelCover(htmlNovelChapterListDoc.select("div#sidebar").select("div#fmimg").select("img").attr("src"));
         novelIntroduction.setNovelNewChapterUrl(htmlNovelChapterListDoc.select("div#info").select("p").get(3).select("a").attr("href"));
         novelIntroduction.setNovelNewChapterTitle(htmlNovelChapterListDoc.select("div#info").select("p").get(3).select("a").text());
         novelIntroduction.setNovelIntroduce(htmlNovelChapterListDoc.select("div#intro").select("p").get(1).text());
         novelIntroduction.setIsComplete(true);
-        Log.i("小说", "名称=" + novelIntroduction.getNovelName() + "   作者：" + novelIntroduction.getNovelAutho() + "     主页地址：" + novelIntroduction.getNovelChapterListUrl());
+        Log.i("小说",  novelIntroduction.toString());
         DbManage.addNovelIntrodution(novelIntroduction);
-//        getNovelAllChapterTitle(novelIntroduction);
+        getNovelAllChapterTitle(novelIntroduction,htmlNovelChapterListDoc);
     }
 
-    public static void getNovelAllChapterTitle(NovelIntroduction novelIntroduction) {
-        String htmlNovelChapterList = SpiderUtils.getHtml(novelIntroduction.getNovelChapterListUrl());
-        Document htmlNovelChapterListDoc = Jsoup.parse(htmlNovelChapterList);
-        Elements frist = htmlNovelChapterListDoc.select("div[class=box_con]");
+
+    //
+    public static void getNovelAllChapterTitle(NovelIntroduction novelIntroduction,Document html) {
+        Elements frist = html.select("div[class=box_con]");
         List<NovelChapter> chapters = new ArrayList<>();
         Elements selectChapter = frist.select("div#list").select("dd");
         for (int i = 0; i < selectChapter.size(); i++) {
             String chapterUrl = selectChapter.get(i).select("a").attr("href");
             String chapterName = selectChapter.get(i).select("a").text();
             chapters.add(new NovelChapter(Long.parseLong(i + ""), novelIntroduction.getId(), chapterName, CheckedUrl(chapterUrl), "", "", "", false));
+            Log.i("下载章节", "chapterName=" + chapterName);
         }
         DbManage.addNovelChapter(chapters);
     }
@@ -104,7 +112,7 @@ public class SpiderNovelFromBiQu {
         Elements rows = doc.select("div[class=nav]");
         Elements type = rows.select("li");
         List<NovelType> novelTypes = new ArrayList<>();
-        for (int i = 2; i < type.size() - 1; i++) {
+        for (int i = 2; i < type.size() - 2; i++) {
             NovelType novelType = new NovelType();
             novelType.setFrom("0");
             novelType.setType(type.get(i).select("a").text());
@@ -149,7 +157,7 @@ public class SpiderNovelFromBiQu {
             novelIntroduction.setNovelAutho(author);
             novelIntroduction.setNovelChapterListUrl(novelUrl);
             novelIntroductions.add(novelIntroduction);
-            Log.i("小说", "名称=" + novelIntroduction.getNovelName() + "   作者：" + novelIntroduction.getNovelAutho() + "     主页地址：" + novelIntroduction.getNovelChapterListUrl()+"  "+novelIntroduction.getNovelType());
+            Log.i("小说", "名称=" + novelIntroduction.getNovelName() + "   作者：" + novelIntroduction.getNovelAutho() + "     主页地址：" + novelIntroduction.getNovelChapterListUrl() + "  " + novelIntroduction.getNovelType());
         }
         DbManage.addNovelIntrodution(novelIntroductions);
     }

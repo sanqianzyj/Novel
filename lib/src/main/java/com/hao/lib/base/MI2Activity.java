@@ -1,6 +1,7 @@
 package com.hao.lib.base;
 
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,14 +9,20 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.*;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.hao.lib.R;
 import com.hao.lib.Util.ImageUtils;
+import com.hao.lib.Util.StatusBarUtil;
 import com.hao.lib.Util.SystemUtil;
 import com.hao.lib.base.theme.AppThemeSetting;
 
@@ -67,20 +74,26 @@ public abstract class MI2Activity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResID) {
-        base = LayoutInflater.from(this).inflate(layoutResID, null);
-        setContentView(base);
+        View view = LayoutInflater.from(this).inflate(layoutResID, null);
+        setContentView(view);
     }
 
     RelativeLayout loading;
-    protected View base;
+    protected RelativeLayout base;
+    protected RelativeLayout content;
 
     @Override
     public void setContentView(View view) {
-        base = LayoutInflater.from(this).inflate(R.layout.mi2_activity, null);
+        StatusBarUtil.setTranslucent(this);
+        StatusBarUtil.setStatubarTextColor(this, true);
+        base = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.mi2_activity, null);
         loading = base.findViewById(R.id.loading);
+        addLoading(LayoutInflater.from(this).inflate(R.layout.view_loading_layout, null));
         view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        ((RelativeLayout) base.findViewById(R.id.content)).addView(view);
+        content = base.findViewById(R.id.content);
+        content.addView(view);
         super.setContentView(base);
+        MI2App.getInstance().addActivity(this);
     }
 
 
@@ -97,24 +110,20 @@ public abstract class MI2Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (checkCallingOrSelfPermission(PERMISSION_MI) != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("继承此activity需要权限");
         }
-//        StatusBarUtil.setTranslucent(this);
         super.onCreate(savedInstanceState);
         MI2App.getInstance().addActivity(this);
     }
 
-
     @Override
     protected void onResume() {
-        if (AppThemeSetting.getInstance().getBackground() != null) {
+        if (AppThemeSetting.getInstance().getBackground() != null && base != null) {
             base.setBackgroundDrawable(AppThemeSetting.getInstance().getBackground());
         }
         super.onResume();
     }
-
 
     /**
      * 便捷无参数跳转
@@ -124,7 +133,6 @@ public abstract class MI2Activity extends AppCompatActivity {
     public void startActivity(Class<? extends Activity> a) {
         startActivity(new Intent(this, a));
     }
-
 
     protected void initPromission(String[] promision) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -149,6 +157,10 @@ public abstract class MI2Activity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    protected void setBackGround(@ColorRes int color) {
+        base.setBackground(ContextCompat.getDrawable(this,color));
+    }
 
     /**
      * 切换背景图片  加入渐变效果
@@ -179,7 +191,6 @@ public abstract class MI2Activity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         SystemUtil.hideInputWhenTouchOtherView(this, ev, notHideView);
@@ -190,6 +201,5 @@ public abstract class MI2Activity extends AppCompatActivity {
     public void addViewForNotHideSoftInput(View v) {
         notHideView.add(v);
     }
-
 
 }

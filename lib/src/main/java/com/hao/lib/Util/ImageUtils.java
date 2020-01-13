@@ -111,9 +111,7 @@ public class ImageUtils {
             multiple = ((float) width / imageWidth) > ((float) height / imageheight) ? ((float) width / imageWidth) : ((float) height / imageheight);
         }
         bitmap = bitMapScale(bitmap, multiple);
-        Log.i("尺寸", multiple + "      " + bitmap.getWidth() + "       " + bitmap.getHeight() + "          " + width + "           " + height);
         bitmap = Bitmap.createBitmap(bitmap, (bitmap.getWidth() - width) / 2, (bitmap.getHeight() - height) / 2, width, height);
-        Log.i("尺寸", multiple + "      " + bitmap.getWidth() + "       " + bitmap.getHeight() + "          " + width + "           " + height);
         return bitmap;
     }
 

@@ -8,8 +8,8 @@ android {
         applicationId "com.hao.novel"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode version()
+        versionName "1.0."+version()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,9 +20,15 @@ android {
     }
 
     greendao {
-        schemaVersion 3
+        schemaVersion version()
         daoPackage 'com.hao.novel.db.dao'
+        targetGenDir 'src/main/java'
     }
+}
+
+
+static def version(){
+    return 6
 }
 
 dependencies {
@@ -34,7 +40,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.2.1'
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.7@aar'//配合对数据库进行加密
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation project(path: ':lib')
     implementation 'androidx.cardview:cardview:1.0.0'

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
 import com.hao.novel.db.dao.DaoMaster;
+import com.hao.novel.db.dao.NovelChapterDao;
 import com.hao.novel.db.dao.NovelIntroductionDao;
 import com.hao.novel.db.dao.NovelTypeDao;
 import com.hao.novel.spider.data.NovelType;
@@ -25,13 +26,12 @@ public class DBHelper extends DaoMaster.DevOpenHelper {
         super(context, name);
     }
 
-
     @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(Database db, int oldVersion, int newVersion) {
         update(db, oldVersion, newVersion);
     }
 
-    private void update(SQLiteDatabase db, int oldVersion, int newVersion) {
+    private void update(Database db, int oldVersion, int newVersion) {
         //把需要管理的数据库表DAO作为最后一个参数传入到方法中
         MigrationHelper.migrate(db, new MigrationHelper.ReCreateAllTableListener() {
                     @Override
@@ -44,6 +44,7 @@ public class DBHelper extends DaoMaster.DevOpenHelper {
                         DaoMaster.dropAllTables(db, ifExists);
                     }
                 },
+                NovelChapterDao.class,
                 NovelIntroductionDao.class,
                 NovelTypeDao.class
                 );

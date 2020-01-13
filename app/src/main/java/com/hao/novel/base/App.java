@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import androidx.core.content.ContextCompat;
+
 import com.hao.lib.Util.SPUtils;
 import com.hao.lib.base.MI2App;
+import com.hao.novel.R;
 import com.hao.novel.db.manage.DBCore;
 import com.hao.novel.service.DownLoadNovelBinder;
 import com.hao.novel.service.DownLoadNovelService;
@@ -35,6 +38,11 @@ public class App extends MI2App {
         SPUtils.init(this);
         DBCore.init(this);
         startBackRunService();
+        init();
+    }
+
+    private void init() {
+        getMi2Theme().setBackground(ContextCompat.getDrawable(this,R.color.white));
     }
 
     public DownLoadNovelBinder getBinder() {
@@ -65,5 +73,8 @@ public class App extends MI2App {
     public void stopService() {
         unbindService(connection);
     }
+
+
+
 
 }

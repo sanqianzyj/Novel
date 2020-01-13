@@ -21,17 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.MiBookActivity"></activity>
-        <activity
-            android:name=".ui.SearchBookActivity"/>
-        <activity android:name=".ui.WelcomeActivity"
-            android:theme="@style/AppTheme_nostatubar">
+
+        <activity android:name=".ui.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.MiBookActivity"></activity>
+        <activity android:name=".ui.SearchBookActivity" />
+        <activity android:name=".ui.BookDetailActivity"/>
 
         <service android:name=".service.DownLoadNovelService" />
     </application>

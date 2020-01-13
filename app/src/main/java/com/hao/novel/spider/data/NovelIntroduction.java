@@ -1,11 +1,11 @@
 package com.hao.novel.spider.data;
 
 
-
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
+
 
 /**
  * 小说简介 用于存储小说的名称，作者，地址等
@@ -24,15 +24,17 @@ public class NovelIntroduction {
     String novelNewChapterUrl;//最新章节地址
     @Unique
     String novelChapterListUrl;//章节列表地址
+    String nowRead;//当前阅读的章节
+    String nowReadID;//当前阅读的章节Id
     boolean isComplete;//信息是否完善
+    boolean isFav;//是否收藏
 
 
-
-    @Generated(hash = 2121122800)
-    public NovelIntroduction(Long id, String novelName, String novelAutho,
-            String novelCover, String novelIntroduce, String novelType,
-            String novelNewChapterTitle, String novelNewChapterUrl,
-            String novelChapterListUrl, boolean isComplete) {
+    @Generated(hash = 1742870737)
+    public NovelIntroduction(Long id, String novelName, String novelAutho, String novelCover,
+            String novelIntroduce, String novelType, String novelNewChapterTitle,
+            String novelNewChapterUrl, String novelChapterListUrl, String nowRead,
+            String nowReadID, boolean isComplete, boolean isFav) {
         this.id = id;
         this.novelName = novelName;
         this.novelAutho = novelAutho;
@@ -42,14 +44,16 @@ public class NovelIntroduction {
         this.novelNewChapterTitle = novelNewChapterTitle;
         this.novelNewChapterUrl = novelNewChapterUrl;
         this.novelChapterListUrl = novelChapterListUrl;
+        this.nowRead = nowRead;
+        this.nowReadID = nowReadID;
         this.isComplete = isComplete;
+        this.isFav = isFav;
     }
 
 
     @Generated(hash = 1432430798)
     public NovelIntroduction() {
     }
-
 
 
     @Override
@@ -156,5 +160,35 @@ public class NovelIntroduction {
 
     public void setComplete(boolean complete) {
         isComplete = complete;
+    }
+
+
+    public String getNowRead() {
+        return this.nowRead;
+    }
+
+
+    public void setNowRead(String nowRead) {
+        this.nowRead = nowRead;
+    }
+
+
+    public String getNowReadID() {
+        return this.nowReadID;
+    }
+
+
+    public void setNowReadID(String nowReadID) {
+        this.nowReadID = nowReadID;
+    }
+
+
+    public boolean getIsFav() {
+        return this.isFav;
+    }
+
+
+    public void setIsFav(boolean isFav) {
+        this.isFav = isFav;
     }
 }

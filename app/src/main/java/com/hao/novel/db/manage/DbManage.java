@@ -87,9 +87,18 @@ public class DbManage {
     }
 
     public static List<NovelIntroduction> getNovelByType(String type, int page) {
-        Log.i("小说","查询"+type);
-        List<NovelIntroduction> introductions=  DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.NovelType.like("%"+type+"%")).list();
-        Log.i("小说","查询="+introductions.size());
+        Log.i("小说", "查询" + type);
+        List<NovelIntroduction> introductions = DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.NovelType.like("%" + type + "%")).offset(10 * page).limit(10).list();
+        Log.i("小说", "查询=" + introductions.size());
         return introductions;
+    }
+
+    public static NovelIntroduction checkNovelInfoById(long id) {
+      return  DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.Id.eq(id)).limit(1).unique();
+    }
+
+    public static List<NovelChapter> getChapterById(long id) {
+        return  DBCore.getDaoSession().getNovelChapterDao().queryBuilder().where(NovelChapterDao.Properties.Nid.eq(id)).list();
+
     }
 }

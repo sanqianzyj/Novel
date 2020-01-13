@@ -7,6 +7,7 @@ import com.hao.novel.db.dao.DaoMaster;
 import com.hao.novel.db.dao.DaoSession;
 
 import org.greenrobot.greendao.async.AsyncSession;
+import org.greenrobot.greendao.database.Database;
 
 
 /**
@@ -40,8 +41,12 @@ public class DBCore {
     private static DaoMaster getDaoMaster() {
         if (daoMaster == null) {
             DBHelper helper = new DBHelper(mContext, DB_NAME);
-            SQLiteDatabase db = helper.getWritableDatabase();
-            daoMaster = new DaoMaster(db);
+//            SQLiteDatabase db = helper.getWritableDatabase();
+//            daoMaster = new DaoMaster(db);
+
+            //创建一个带有初始密码的数据库
+            Database pdb = helper.getEncryptedReadableDb("hao");
+            daoMaster=new DaoMaster(pdb);
         }
         return daoMaster;
     }

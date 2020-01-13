@@ -78,7 +78,7 @@ public class DownLoadNovelService extends Service {
         @Override
         public void sendCmd(NovolDownTask o, int index) {
             try {
-                Log.i("小说","添加任务="+o.getNovelDownTag());
+                Log.i("小说", "添加任务=" + o.getNovelDownTag());
                 tag.add(index, o);
             } catch (Exception e) {
                 tag.add(o);
@@ -142,7 +142,7 @@ public class DownLoadNovelService extends Service {
                     break;
                 }
                 if (tag.size() > 0) {
-                    if (tag.get(0).downListener != null) {
+                    if (tag.get(0) != null && tag.get(0).downListener != null && tag.get(0).isneedListener) {
                         tag.get(0).downListener.startDown();
                     }
                     Log.i("小说", "当前执行任务" + tag.get(0).getNovelDownTag() + "    任务数:" + tag.size() + "  任务列表：" + tag.toString());
@@ -159,11 +159,8 @@ public class DownLoadNovelService extends Service {
                                 SpiderNovelFromBiQu.getAllNovelDetailInfo(novelIntroduction);
                             }
                             break;
-                        case novelDetail://下载单本小说的信息
+                        case novelDetail://下载单本小说的信息 包含章节信息
                             SpiderNovelFromBiQu.getAllNovelDetailInfo((NovelIntroduction) tag.get(0).getObject());
-                            break;
-                        case novelallchapterTitle://下载单本小说的所有章节
-                            SpiderNovelFromBiQu.getNovelAllChapterTitle((NovelIntroduction) tag.get(0).getObject());
                             break;
                         case singlechaptercontent://下载单章内容
                             SpiderNovelFromBiQu.getNovelContent((NovelChapter) tag.get(0).getObject());
@@ -182,7 +179,7 @@ public class DownLoadNovelService extends Service {
                     if (tag.get(0).downListener != null) {
                         tag.get(0).downListener.endDown();
                     }
-                    Log.i("小说","删除任务="+tag.get(0).getNovelDownTag());
+                    Log.i("小说", "删除任务=" + tag.get(0).getNovelDownTag());
                     tag.remove(0);
                 }
             }
