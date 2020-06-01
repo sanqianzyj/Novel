@@ -122,7 +122,7 @@ public class MuneAdapter extends RecyclerView.Adapter<MuneAdapter.MuneViewHolder
 
     public void startAnimal(@NonNull final MuneViewHolder holder, final int position) {
         isInAnimal = true;
-        final Animation animationin = AnimationUtils.loadAnimation(holder.view.getContext(), R.anim.anim_item_in);
+        final Animation animationin = AnimationUtils.loadAnimation(holder.view.getContext(), R.anim.anim_item_right_in);
         animationin.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

@@ -1,9 +1,7 @@
 package com.hao.novel.ui.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,22 +16,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.hao.lib.Util.ImageUtils;
 import com.hao.lib.Util.MiLog;
-import com.hao.lib.Util.SystemUtil;
-import com.hao.lib.Util.SystemUtils;
-import com.hao.lib.base.AppUtils;
 import com.hao.novel.R;
 import com.hao.novel.base.App;
 import com.hao.novel.db.manage.DbManage;
-import com.hao.novel.helptool.Tool;
-import com.hao.novel.service.DownListener;
-import com.hao.novel.service.DownLoadNovelService;
-import com.hao.novel.service.NovolDownTask;
 import com.hao.novel.spider.data.NovelIntroduction;
-import com.hao.novel.spider.data.NovelType;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -207,7 +194,7 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
 
     public void startAnimal(@NonNull final MuneViewHolder holder, final int position) {
         isInAnimal = true;
-        final Animation animationin = AnimationUtils.loadAnimation(holder.view.getContext(), R.anim.anim_item_in);
+        final Animation animationin = AnimationUtils.loadAnimation(holder.view.getContext(), R.anim.anim_item_right_in);
         animationin.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

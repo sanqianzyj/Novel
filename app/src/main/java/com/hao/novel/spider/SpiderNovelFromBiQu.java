@@ -92,6 +92,7 @@ public class SpiderNovelFromBiQu {
         novelChapter.setBeforChapterUrl(CheckedUrl(thrid.get(1).attr("href")));
         novelChapter.setNextChapterUrl(CheckedUrl(thrid.select("a").get(3).attr("href")));
         novelChapter.setChapterContent(frist.select("div#content").html().replace(" ", "").replace("\n", "").replace("<br>&nbsp;&nbsp;&nbsp;&nbsp;", "\n  ").replace("<br>", "").replace("&nbsp;", "").split("<p>")[0]);
+        novelChapter.setIsComplete(true);
         DbManage.updateNovelChapter(novelChapter);
     }
 

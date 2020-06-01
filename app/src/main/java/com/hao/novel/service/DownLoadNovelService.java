@@ -21,7 +21,7 @@ import com.hao.novel.spider.SpiderNovelFromBiQu;
 import com.hao.novel.spider.data.NovelChapter;
 import com.hao.novel.spider.data.NovelIntroduction;
 import com.hao.novel.spider.data.NovelType;
-import com.hao.novel.ui.SearchBookActivity;
+import com.hao.novel.ui.activity.SearchBookActivity;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

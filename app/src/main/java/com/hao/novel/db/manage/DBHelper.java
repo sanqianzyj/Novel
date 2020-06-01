@@ -1,14 +1,12 @@
 package com.hao.novel.db.manage;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
-import com.hao.novel.db.dao.DaoMaster;
-import com.hao.novel.db.dao.NovelChapterDao;
-import com.hao.novel.db.dao.NovelIntroductionDao;
-import com.hao.novel.db.dao.NovelTypeDao;
-import com.hao.novel.spider.data.NovelType;
+import com.hao.novel.spider.data.NovelChapterDao;
+import com.hao.novel.spider.data.NovelIntroductionDao;
+import com.hao.novel.spider.data.NovelTypeDao;
+import com.hao.novel.ui.used.DaoMaster;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -47,6 +45,6 @@ public class DBHelper extends DaoMaster.DevOpenHelper {
                 NovelChapterDao.class,
                 NovelIntroductionDao.class,
                 NovelTypeDao.class
-                );
+        );
     }
 }

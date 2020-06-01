@@ -3,8 +3,10 @@ package com.hao.lib.elseeffect;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.os.Build;
+import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.Transformation;
 
 /**
  * 自定义的一个动画工具类
@@ -134,5 +136,8 @@ public class AnimalUtils {
 
         void onAnimationRepeat(Animator animation, Object... o);
     }
+
+
+
 }
 

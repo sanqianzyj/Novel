@@ -3,12 +3,14 @@ package com.hao.novel.db.manage;
 import android.util.Log;
 
 import com.hao.novel.base.NovelContent;
-import com.hao.novel.db.dao.NovelChapterDao;
-import com.hao.novel.db.dao.NovelIntroductionDao;
-import com.hao.novel.db.dao.NovelTypeDao;
 import com.hao.novel.spider.data.NovelChapter;
+import com.hao.novel.spider.data.NovelChapterDao;
 import com.hao.novel.spider.data.NovelIntroduction;
+import com.hao.novel.spider.data.NovelIntroductionDao;
 import com.hao.novel.spider.data.NovelType;
+import com.hao.novel.spider.data.NovelTypeDao;
+import com.hao.novel.ui.used.ReadInfo;
+import com.hao.novel.ui.used.ReadInfoDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,17 @@ public class DbManage {
                 NovelIntroductionDao.Properties.NovelChapterListUrl.eq(url)).limit(1).unique();
     }
 
+    /**
+     * 通过章节地址获取小说章节详情
+     *
+     * @param url
+     * @return
+     */
+    public static NovelChapter checkNovelChaptterByUrl(String url) {
+        return DBCore.getDaoSession().getNovelChapterDao().queryBuilder().where(
+                NovelChapterDao.Properties.ChapterUrl.eq(url)).limit(1).unique();
+    }
+
 
     public static List<NovelIntroduction> getAllNovelNoDetail() {
         return DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().list();
@@ -94,11 +107,30 @@ public class DbManage {
     }
 
     public static NovelIntroduction checkNovelInfoById(long id) {
-      return  DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.Id.eq(id)).limit(1).unique();
+        return DBCore.getDaoSession().getNovelIntroductionDao().queryBuilder().where(NovelIntroductionDao.Properties.Id.eq(id)).limit(1).unique();
     }
 
     public static List<NovelChapter> getChapterById(long id) {
-        return  DBCore.getDaoSession().getNovelChapterDao().queryBuilder().where(NovelChapterDao.Properties.Nid.eq(id)).list();
+        return DBCore.getDaoSession().getNovelChapterDao().queryBuilder().where(NovelChapterDao.Properties.Nid.eq(id)).list();
 
+    }
+
+    //通过小说id和章节id查询章节信息
+    public static NovelChapter getChapterById(long nid, long cid) {
+        return DBCore.getDaoSession().getNovelChapterDao().queryBuilder().where(NovelChapterDao.Properties.Nid.eq(nid), NovelChapterDao.Properties.Cid.eq(cid)).limit(1).unique();
+
+    }
+
+    public static List<NovelIntroduction> checkNovelIntrodutionByStr(String string) {
+        NovelIntroductionDao novelIntroductionDao = DBCore.getDaoSession().getNovelIntroductionDao();
+        List<NovelIntroduction> novelIntroductions = novelIntroductionDao.queryBuilder().where(novelIntroductionDao.queryBuilder()
+                .or(NovelIntroductionDao.Properties.NovelName.like("%" + string + "%"),
+                        NovelIntroductionDao.Properties.NovelAutho.like("%" + string + "%"))).list();
+        return novelIntroductions;
+    }
+
+    public static void saveReadInfo(ReadInfo readInfo) {
+        ReadInfoDao readInfoDao = DBCore.getDaoSession().getReadInfoDao();
+        readInfoDao.insertOrReplace(readInfo);
     }
 }

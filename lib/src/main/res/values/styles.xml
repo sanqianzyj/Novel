@@ -21,6 +21,8 @@
         <attr name="needselftouch" format="boolean"/>
     </declare-styleable>
 
+
+
     <declare-styleable name="NiceImageView">
         <attr name="iscircle" format="boolean"/>
         <attr name="iscoversrc" format="boolean"/>

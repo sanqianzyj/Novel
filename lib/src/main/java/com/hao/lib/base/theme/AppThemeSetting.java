@@ -50,7 +50,7 @@ public class AppThemeSetting {
 
     public Typeface getTypeface() {
         if (typeface == null) {
-            typeface = TypeFaceUtils.getHKZHZT(MI2App.getInstance());
+            typeface = TypeFaceUtils.getTypeFaceInfoList().get(0).getTypeface();
         }
         return typeface;
     }

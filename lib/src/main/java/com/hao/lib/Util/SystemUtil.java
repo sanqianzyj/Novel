@@ -33,9 +33,17 @@ public class SystemUtil {
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
      */
-    public static int dp2px(Context context, Float dpValue) {
+    public static float dp2px(Context context, Float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+        return dpValue * scale + 0.5f;
+    }
+
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     */
+    public static float px2dip(Context context, Float pxValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return pxValue / scale + 0.5f;
     }
 
 

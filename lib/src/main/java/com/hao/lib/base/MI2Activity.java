@@ -6,8 +6,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
@@ -135,6 +137,13 @@ public abstract class MI2Activity extends AppCompatActivity {
     }
 
     protected void initPromission(String[] promision) {
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            if(!getPackageManager().canRequestPackageInstalls()){
+                Uri uri = Uri.parse("package:"+getPackageName());
+                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,uri);
+                startActivityForResult(intent, 19900);
+            }
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<String> promission = new ArrayList<>();
             for (int i = 0; i < promision.length; i++) {
@@ -154,6 +163,8 @@ public abstract class MI2Activity extends AppCompatActivity {
             if (str.length != 0) {
                 requestPermissions(str, 0);
             }
+
+
         }
     }
 
@@ -183,7 +194,7 @@ public abstract class MI2Activity extends AppCompatActivity {
                         AppThemeSetting.getInstance().setBackground(drawableNow);
                         base.setBackgroundDrawable(ImageUtils.getTransParentDrawable(AppThemeSetting.getInstance().getBackground(), ((int) valueAnimator.getAnimatedValue() - 50) * 2));
                     } else {
-                        base.setBackgroundDrawable(ImageUtils.getTransParentDrawable(AppThemeSetting.getInstance().getBackground(), 100 - (int) valueAnimator.getAnimatedValue() * 2));
+                         base.setBackgroundDrawable(ImageUtils.getTransParentDrawable(AppThemeSetting.getInstance().getBackground(), 100 - (int) valueAnimator.getAnimatedValue() * 2));
                     }
                 }
             });

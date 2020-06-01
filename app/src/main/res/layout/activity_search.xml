@@ -4,40 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".ui.SearchBookActivity">
+    android:orientation="vertical"
+    tools:context=".ui.activity.SearchBookActivity">
 
-    <LinearLayout
+
+    <EditText
+        android:id="@+id/search_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/shape_coner_black_5dp"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        android:cursorVisible="true"
+        android:padding="5dp"
+        android:textCursorDrawable="@null"
+        android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/search_book"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/traslant"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@null"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:text="搜索"
-            android:textColor="@color/white"
-
-            />
-    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/novel_type"

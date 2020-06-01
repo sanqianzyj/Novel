@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 23
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.hao.novel"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 23
         versionCode version()
-        versionName "1.0."+version()
+        versionName "1.0." + version()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -21,13 +21,11 @@ android {
 
     greendao {
         schemaVersion version()
-        daoPackage 'com.hao.novel.db.dao'
-        targetGenDir 'src/main/java'
     }
 }
 
 
-static def version(){
+static def version() {
     return 6
 }
 

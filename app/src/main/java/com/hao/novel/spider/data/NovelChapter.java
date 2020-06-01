@@ -1,5 +1,8 @@
 package com.hao.novel.spider.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hao.novel.base.App;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -7,7 +10,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class NovelChapter {
+public class NovelChapter implements Parcelable {
     private static final long serialVersionUID = App.serialVersionUID;
     @Id(autoincrement = true)
     Long Cid;//小说章节的唯一标示
@@ -15,8 +18,8 @@ public class NovelChapter {
     private String chapterName;
     private String chapterUrl;
     String chapterContent;//本章小说内容
-    String nextChapterUrl;//下一张
-    String beforChapterUrl;//上一张
+    String nextChapterUrl;//下一章
+    String beforChapterUrl;//上一章
     boolean isComplete;//信息是否完善
 
 
@@ -41,9 +44,64 @@ public class NovelChapter {
     }
 
 
+    protected NovelChapter(Parcel in) {
+        if (in.readByte() == 0) {
+            Cid = null;
+        } else {
+            Cid = in.readLong();
+        }
+        if (in.readByte() == 0) {
+            Nid = null;
+        } else {
+            Nid = in.readLong();
+        }
+        chapterName = in.readString();
+        chapterUrl = in.readString();
+        chapterContent = in.readString();
+        nextChapterUrl = in.readString();
+        beforChapterUrl = in.readString();
+        isComplete = in.readByte() != 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (Cid == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(Cid);
+        }
+        if (Nid == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(Nid);
+        }
+        dest.writeString(chapterName);
+        dest.writeString(chapterUrl);
+        dest.writeString(chapterContent);
+        dest.writeString(nextChapterUrl);
+        dest.writeString(beforChapterUrl);
+        dest.writeByte((byte) (isComplete ? 1 : 0));
+    }
 
-    
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<NovelChapter> CREATOR = new Creator<NovelChapter>() {
+        @Override
+        public NovelChapter createFromParcel(Parcel in) {
+            return new NovelChapter(in);
+        }
+
+        @Override
+        public NovelChapter[] newArray(int size) {
+            return new NovelChapter[size];
+        }
+    };
+
     public Long getCid() {
         return this.Cid;
     }

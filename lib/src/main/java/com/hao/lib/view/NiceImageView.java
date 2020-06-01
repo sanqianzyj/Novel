@@ -282,7 +282,7 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setBorderWidth(int borderWidth) {
-        this.borderWidth = SystemUtil.dp2px(context, (float) borderWidth);
+        this.borderWidth = (int) SystemUtil.dp2px(context, (float) borderWidth);
         calculateRadiiAndRectF(false);
     }
 
@@ -292,7 +292,7 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setInnerBorderWidth(int innerBorderWidth) {
-        this.innerBorderWidth = SystemUtil.dp2px(context, (float) innerBorderWidth);
+        this.innerBorderWidth = (int) SystemUtil.dp2px(context, (float) innerBorderWidth);
         clearInnerBorderWidth();
         invalidate();
     }
@@ -303,27 +303,27 @@ public class NiceImageView extends AppCompatImageView {
     }
 
     public void setCornerRadius(int cornerRadius) {
-        this.cornerRadius = SystemUtil.dp2px(context, (float) cornerRadius);
+        this.cornerRadius = (int) SystemUtil.dp2px(context, (float) cornerRadius);
         calculateRadiiAndRectF(false);
     }
 
     public void setCornerTopLeftRadius(int cornerTopLeftRadius) {
-        this.cornerTopLeftRadius = SystemUtil.dp2px(context, (float) cornerTopLeftRadius);
+        this.cornerTopLeftRadius = (int) SystemUtil.dp2px(context, (float) cornerTopLeftRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerTopRightRadius(int cornerTopRightRadius) {
-        this.cornerTopRightRadius = SystemUtil.dp2px(context, (float) cornerTopRightRadius);
+        this.cornerTopRightRadius = (int) SystemUtil.dp2px(context, (float) cornerTopRightRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerBottomLeftRadius(int cornerBottomLeftRadius) {
-        this.cornerBottomLeftRadius = SystemUtil.dp2px(context, (float) cornerBottomLeftRadius);
+        this.cornerBottomLeftRadius = (int) SystemUtil.dp2px(context, (float) cornerBottomLeftRadius);
         calculateRadiiAndRectF(true);
     }
 
     public void setCornerBottomRightRadius(int cornerBottomRightRadius) {
-        this.cornerBottomRightRadius = SystemUtil.dp2px(context, (float) cornerBottomRightRadius);
+        this.cornerBottomRightRadius = (int) SystemUtil.dp2px(context, (float) cornerBottomRightRadius);
         calculateRadiiAndRectF(true);
     }
 

@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
+
 import com.hao.lib.R;
 import com.hao.lib.base.MI2App;
 
@@ -32,7 +33,14 @@ public class PopUtils {
         popupWindow.setContentView(addView);
         popupWindow.setTouchable(true);
         popupWindow.setWidth(v.getWidth());
-
+        if (addView.getTag() != null) {
+            if (addView.getTag() instanceof String) {
+                if (((String) addView.getTag()).startsWith("height")) {
+                    float height = SystemUtil.dp2px(MI2App.getInstance(), Float.parseFloat(((String) addView.getTag()).split(",")[1]));
+                    popupWindow.setHeight((int) height);
+                }
+            }
+        }
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
             @Override

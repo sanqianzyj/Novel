@@ -1,10 +1,9 @@
 package com.hao.novel.db.manage;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.hao.novel.db.dao.DaoMaster;
-import com.hao.novel.db.dao.DaoSession;
+import com.hao.novel.ui.used.DaoMaster;
+import com.hao.novel.ui.used.DaoSession;
 
 import org.greenrobot.greendao.async.AsyncSession;
 import org.greenrobot.greendao.database.Database;

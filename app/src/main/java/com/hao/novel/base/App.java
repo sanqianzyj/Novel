@@ -6,10 +6,13 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
+import android.os.Environment;
 import android.os.IBinder;
 
 import androidx.core.content.ContextCompat;
 
+import com.hao.lib.Util.MMKVManager;
 import com.hao.lib.Util.SPUtils;
 import com.hao.lib.base.MI2App;
 import com.hao.novel.R;
@@ -42,7 +45,8 @@ public class App extends MI2App {
     }
 
     private void init() {
-        getMi2Theme().setBackground(ContextCompat.getDrawable(this,R.color.white));
+        MMKVManager.getInstance(getExternalFilesDir(null).getPath());
+        getMi2Theme().setBackground(ContextCompat.getDrawable(this, R.color.white));
     }
 
     public DownLoadNovelBinder getBinder() {
@@ -65,7 +69,7 @@ public class App extends MI2App {
             binder = (DownLoadNovelBinder) service;
             if (binder != null) {
                 binder.sendCmd(new NovolDownTask(DownLoadNovelService.NovelDownTag.noveltype));
-//                binder.sendCmd(new NovolDownTask(DownLoadNovelService.NovelDownTag.allTitle));
+                binder.sendCmd(new NovolDownTask(DownLoadNovelService.NovelDownTag.allTitle));
             }
         }
     };
@@ -73,8 +77,6 @@ public class App extends MI2App {
     public void stopService() {
         unbindService(connection);
     }
-
-
 
 
 }
