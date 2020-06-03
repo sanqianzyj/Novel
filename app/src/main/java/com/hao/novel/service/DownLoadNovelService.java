@@ -1,7 +1,6 @@
 package com.hao.novel.service;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -15,13 +14,12 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.hao.novel.R;
-import com.hao.novel.base.App;
 import com.hao.novel.db.manage.DbManage;
 import com.hao.novel.spider.SpiderNovelFromBiQu;
 import com.hao.novel.spider.data.NovelChapter;
 import com.hao.novel.spider.data.NovelIntroduction;
 import com.hao.novel.spider.data.NovelType;
-import com.hao.novel.ui.activity.SearchBookActivity;
+import com.hao.novel.ui.activity.NovelListActivity;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -98,7 +96,7 @@ public class DownLoadNovelService extends Service {
     public void onCreate() {
         super.onCreate();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent notificationIntent = new Intent(this, SearchBookActivity.class);
+        Intent notificationIntent = new Intent(this, NovelListActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
         Notification.Builder builder = new Notification.Builder(this)
@@ -112,10 +110,10 @@ public class DownLoadNovelService extends Service {
         // 兼容  API 26，Android 8.0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // 第三个参数表示通知的重要程度，默认则只在通知栏闪烁一下
-            NotificationChannel notificationChannel = new NotificationChannel("com.hao.novel", App.getInstance().getOpPackageName(), NotificationManager.IMPORTANCE_DEFAULT);
-            // 注册通道，注册后除非卸载再安装否则不改变
-            notificationManager.createNotificationChannel(notificationChannel);
-            builder.setChannelId("com.hao.novel");
+//            NotificationChannel notificationChannel = new NotificationChannel("com.hao.novel", App.getInstance()., NotificationManager.IMPORTANCE_DEFAULT);
+//            // 注册通道，注册后除非卸载再安装否则不改变
+//            notificationManager.createNotificationChannel(notificationChannel);
+//            builder.setChannelId("com.hao.novel");
         }
         notificationManager.notify(11, builder.build());
 

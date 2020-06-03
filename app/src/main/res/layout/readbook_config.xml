@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/readbook_config"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="110dp"
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="10dp">
@@ -55,6 +55,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选择字体" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="文字间距："
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/word_spac_refuse"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/refuse" />
+
+        <TextView
+            android:id="@+id/word_spac_size"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/shape_coner_black_5dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="16"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/word_spac_add"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/add" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
     </LinearLayout>
 
 </LinearLayout>

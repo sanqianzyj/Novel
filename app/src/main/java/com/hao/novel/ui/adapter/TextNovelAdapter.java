@@ -29,6 +29,11 @@ public class TextNovelAdapter extends RecyclerView.Adapter<TextNovelAdapter.Nove
         return mNovelPage;
     }
 
+    public void setmNovelPage(List<NovelIntroduction> mNovelPage) {
+        this.mNovelPage = mNovelPage;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public NovelTextHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -82,7 +87,8 @@ public class TextNovelAdapter extends RecyclerView.Adapter<TextNovelAdapter.Nove
             if (novelClassify.getNovelAutho() == null) {
                 novelClassify.setNovelAutho("");
             }
-            novel_name.setText(novelClassify.getNovelName() + "(" + novelClassify.getNovelAutho() + ")");
+            String auther = novelClassify.getNovelAutho() == null ? "" : ("(" + novelClassify.getNovelAutho() + ")");
+            novel_name.setText(novelClassify.getNovelName());
         }
     }
 

@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".ui.activity.SearchBookActivity">
-
-
-    <EditText
-        android:id="@+id/search_book"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/shape_coner_black_5dp"
-        android:cursorVisible="true"
-        android:padding="5dp"
-        android:textCursorDrawable="@null"
-        android:textSize="18sp" />
-
+    tools:context=".ui.activity.NovelListActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/novel_type"

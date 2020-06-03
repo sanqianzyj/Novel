@@ -40,13 +40,22 @@
             android:src="@mipmap/setting" />
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/search"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <LinearLayout
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="50dp"
-        android:background="@drawable/ripple_bg"
-        android:src="@mipmap/search" />
+        android:layout_margin="30dp"
+        android:background="@drawable/shape_round_shadow"
+        android:gravity="center">
+
+
+        <ImageButton
+            android:id="@+id/search"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/ripple_bg"
+            android:src="@mipmap/search" />
+    </LinearLayout>
 </RelativeLayout>

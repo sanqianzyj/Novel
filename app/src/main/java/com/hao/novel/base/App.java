@@ -27,9 +27,6 @@ public class App extends MI2App {
     static App app;
     private DownLoadNovelBinder binder;
 
-
-    private long updateTime = 0;
-
     public static App getInstance() {
         return app;
     }

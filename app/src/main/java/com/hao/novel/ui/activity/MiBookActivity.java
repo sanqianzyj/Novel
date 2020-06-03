@@ -11,12 +11,9 @@ import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.hao.lib.Util.ToastUtils;
-import com.hao.lib.Util.TypeFaceUtils;
 import com.hao.lib.base.AppUtils;
 import com.hao.novel.R;
 import com.hao.novel.base.App;
@@ -39,6 +36,7 @@ public class MiBookActivity extends BaseActivity implements View.OnClickListener
 
     private void initView() {
         findViewById(R.id.shop).setOnClickListener(this);
+        findViewById(R.id.search).setOnClickListener(this);
     }
 
     //转场动画
@@ -68,7 +66,10 @@ public class MiBookActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.shop:
-                startActivity(new Intent(this, SearchBookActivity.class));
+                startActivity(new Intent(this, NovelListActivity.class));
+                break;
+            case R.id.search:
+                startActivity(new Intent(this, SearchNovelActivity.class));
                 break;
         }
     }

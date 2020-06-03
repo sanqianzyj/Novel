@@ -34,12 +34,9 @@ import com.hao.novel.ui.adapter.TextNovelAdapter;
 
 import java.util.List;
 
-public class SearchBookActivity extends BaseActivity implements View.OnClickListener, TabLayout.BaseOnTabSelectedListener, AdapterView.OnItemClickListener {
+public class NovelListActivity extends BaseActivity implements View.OnClickListener, TabLayout.BaseOnTabSelectedListener, AdapterView.OnItemClickListener {
     RecyclerView novel_list;
     TabLayout novel_type;
-    EditText search_book;
-    RecyclerView recyclerView;
-    PopupWindow pop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,61 +49,6 @@ public class SearchBookActivity extends BaseActivity implements View.OnClickList
     private void finidView() {
         novel_list = findViewById(R.id.novel_list);
         novel_type = findViewById(R.id.novel_type);
-        search_book = findViewById(R.id.search_book);
-        addViewForNotHideSoftInput(search_book);
-
-        search_book.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
-                    if (pop != null && pop.isShowing()) {
-                        pop.dismiss();
-                    }
-                    return;
-                }
-                if (pop != null) {
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                    ((TextNovelAdapter) recyclerView.getAdapter()).setList(DbManage.checkNovelIntrodutionByStr(s.toString()));
-                    ((RecyclerView) pop.getContentView()).getAdapter().notifyDataSetChanged();
-                    if (!pop.isShowing()) {
-                        pop.showAsDropDown(search_book);
-                    }
-                } else {
-                    recyclerView = (RecyclerView) LayoutInflater.from(App.getInstance()).inflate(R.layout.recycle_layout, null);
-                    recyclerView.setTag("height,200");
-                    recyclerView.setBackgroundResource(R.color.white);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(App.getInstance()));
-                    recyclerView.addItemDecoration(new DividerItemDecoration(App.getInstance(), DividerItemDecoration.VERTICAL));
-                    recyclerView.setAdapter(new TextNovelAdapter(App.getInstance(), DbManage.checkNovelIntrodutionByStr(s.toString()))
-                            .setItemClickLisener(new TextNovelAdapter.OnItemClickListener() {
-                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                                @Override
-                                public void itemClick(int position, View view, Object object) {
-                                    if (pop != null) {
-                                        pop.dismiss();
-                                    }
-
-                                    //保存或者更新当前小说的信息
-                                    NovelIntroduction novelListItemContent = ((TextNovelAdapter) recyclerView.getAdapter()).getDate().get(position);
-                                    Intent intent = new Intent(SearchBookActivity.this, BookDetailActivity.class);
-                                    intent.putExtra("novelId", novelListItemContent.getId());
-                                    startActivity(intent);
-                                }
-                            }));
-                    PopUtils.getInstance().createPop(search_book, recyclerView).showAsViewDown(search_book);
-                }
-            }
-        });
     }
 
     private void initView() {
@@ -178,7 +120,7 @@ public class SearchBookActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         final NovelIntroduction novelIntroduction = ((NovelListAdapter) novel_list.getAdapter()).getItem(i);
-        Intent intent = new Intent(SearchBookActivity.this, BookDetailActivity.class);
+        Intent intent = new Intent(NovelListActivity.this, BookDetailActivity.class);
         intent.putExtra("novelId", novelIntroduction.getId());
         startActivity(intent);
 //        App.getInstance().getBinder().sendCmd(new NovolDownTask(DownLoadNovelService.NovelDownTag.novelDetail, novelIntroduction, new DownListener() {

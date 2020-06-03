@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: __local_aars__:/Users/haozhang/Desktop/Github/Novel/mqtt/libs/commons-net-2.2.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mqtt/libs/commons-net-2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -168,7 +168,7 @@
                 android:layout_height="150dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="45dp"
-                android:src="@mipmap/defoult_img" />
+                 />
         </LinearLayout>
     </RelativeLayout>
 

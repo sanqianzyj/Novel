@@ -45,7 +45,8 @@ public class ReadBookActivity extends BaseActivity implements PullViewLayout.Pul
     View readbook_config;
     MuneState muneState = MuneState.none;//当前菜单状态
     MuneState nextShow = MuneState.mune;//初始化下一个需要的界面为菜单
-    TextView textsize;
+    TextView textsize;//字体大小
+    TextView word_spac_size;//文字间距
 
 
     NovelChapter novelChapter;//当前页下载的小说内容
@@ -101,6 +102,7 @@ public class ReadBookActivity extends BaseActivity implements PullViewLayout.Pul
     public void initDate() {
         miTextViewConfig = MiTextViewConfig.getDefoutConfig(miTextView.getWidth(), miTextView.getHeight());
         textsize.setText((int) SystemUtil.px2dip(App.getInstance(), miTextViewConfig.getTextSize()) + "");
+        word_spac_size.setText((int) SystemUtil.px2dip(App.getInstance(), miTextViewConfig.getWordSpacingExtra()) + "");
         Log.i("流程", "宽：" + miTextViewConfig.getViewWidth() + " 高：" + miTextViewConfig.getViewhigh() + " 行字数：" + miTextViewConfig.getLineTextNum() + " 行数：" + miTextViewConfig.getLineNum());
         if (novelChapter == null) {
             return;
@@ -185,6 +187,41 @@ public class ReadBookActivity extends BaseActivity implements PullViewLayout.Pul
                 if (textSizeRefuse > 13) {
                     textSizeRefuse = textSizeRefuse - 1;
                     textsize.setText(textSizeRefuse + "");
+                    textSizeRefuse = SystemUtil.dp2px(App.getInstance(), (float) textSizeRefuse);
+                }
+
+                if (miTextViewConfig != null) {
+                    miTextViewConfig.setTextSize(textSizeRefuse);
+                    pullViewLayout.clear();
+                    initDate();
+                }
+            }
+        });
+
+
+        word_spac_size = findViewById(R.id.word_spac_size);
+        findViewById(R.id.word_spac_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float textSizeadd = Float.parseFloat(word_spac_size.getText().toString());
+                textSizeadd = textSizeadd + 1;
+                word_spac_size.setText(textSizeadd + "");
+                textSizeadd = SystemUtil.dp2px(App.getInstance(), (float) textSizeadd);
+                if (miTextViewConfig != null) {
+                    miTextViewConfig.setTextSize(textSizeadd);
+                    pullViewLayout.clear();
+                    initDate();
+                }
+            }
+        });
+
+        findViewById(R.id.word_spac_refuse).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float textSizeRefuse = Float.parseFloat(word_spac_size.getText().toString());
+                if (textSizeRefuse > 13) {
+                    textSizeRefuse = textSizeRefuse - 1;
+                    word_spac_size.setText(textSizeRefuse + "");
                     textSizeRefuse = SystemUtil.dp2px(App.getInstance(), (float) textSizeRefuse);
                 }
 
