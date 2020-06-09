@@ -3,6 +3,7 @@ package com.hao.novel.spider.data;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 
@@ -12,14 +13,12 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class NovelIntroduction {
-    @Id(autoincrement = true)
-    Long id;
-    @Unique
     String novelName;//小说名
     String novelAutho;//作者
     String novelCover;//封面
     String novelIntroduce;//文字介绍
     String novelType;//小说类型
+    String novelListUrl;//小说列表地址
     String novelNewChapterTitle;//最新章节
     String novelNewChapterUrl;//最新章节地址
     @Unique
@@ -28,19 +27,21 @@ public class NovelIntroduction {
     String nowReadID;//当前阅读的章节Id
     boolean isComplete;//信息是否完善
     boolean isFav;//是否收藏
+    long creatTime;
 
 
-    @Generated(hash = 1742870737)
-    public NovelIntroduction(Long id, String novelName, String novelAutho, String novelCover,
-            String novelIntroduce, String novelType, String novelNewChapterTitle,
-            String novelNewChapterUrl, String novelChapterListUrl, String nowRead,
-            String nowReadID, boolean isComplete, boolean isFav) {
-        this.id = id;
+    @Generated(hash = 1847733845)
+    public NovelIntroduction(String novelName, String novelAutho, String novelCover,
+            String novelIntroduce, String novelType, String novelListUrl,
+            String novelNewChapterTitle, String novelNewChapterUrl,
+            String novelChapterListUrl, String nowRead, String nowReadID,
+            boolean isComplete, boolean isFav, long creatTime) {
         this.novelName = novelName;
         this.novelAutho = novelAutho;
         this.novelCover = novelCover;
         this.novelIntroduce = novelIntroduce;
         this.novelType = novelType;
+        this.novelListUrl = novelListUrl;
         this.novelNewChapterTitle = novelNewChapterTitle;
         this.novelNewChapterUrl = novelNewChapterUrl;
         this.novelChapterListUrl = novelChapterListUrl;
@@ -48,7 +49,9 @@ public class NovelIntroduction {
         this.nowReadID = nowReadID;
         this.isComplete = isComplete;
         this.isFav = isFav;
+        this.creatTime = creatTime;
     }
+
 
 
     @Generated(hash = 1432430798)
@@ -72,13 +75,6 @@ public class NovelIntroduction {
     }
 
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNovelName() {
         return this.novelName;
@@ -190,5 +186,29 @@ public class NovelIntroduction {
 
     public void setIsFav(boolean isFav) {
         this.isFav = isFav;
+    }
+
+
+
+    public String getNovelListUrl() {
+        return this.novelListUrl;
+    }
+
+
+
+    public void setNovelListUrl(String novelListUrl) {
+        this.novelListUrl = novelListUrl;
+    }
+
+
+
+    public long getCreatTime() {
+        return this.creatTime;
+    }
+
+
+
+    public void setCreatTime(long creatTime) {
+        this.creatTime = creatTime;
     }
 }

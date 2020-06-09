@@ -1,6 +1,7 @@
 package com.hao.novel.db.manage;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.hao.novel.ui.used.DaoMaster;
 import com.hao.novel.ui.used.DaoSession;
@@ -40,12 +41,12 @@ public class DBCore {
     private static DaoMaster getDaoMaster() {
         if (daoMaster == null) {
             DBHelper helper = new DBHelper(mContext, DB_NAME);
-//            SQLiteDatabase db = helper.getWritableDatabase();
-//            daoMaster = new DaoMaster(db);
+            SQLiteDatabase db = helper.getWritableDatabase();
+            daoMaster = new DaoMaster(db);
 
-            //创建一个带有初始密码的数据库
-            Database pdb = helper.getEncryptedReadableDb("hao");
-            daoMaster=new DaoMaster(pdb);
+//            //创建一个带有初始密码的数据库
+//            Database pdb = helper.getEncryptedReadableDb("hao");
+//            daoMaster=new DaoMaster(pdb);
         }
         return daoMaster;
     }

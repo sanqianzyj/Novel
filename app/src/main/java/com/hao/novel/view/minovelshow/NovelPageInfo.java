@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NovelPageInfo {
-    int page;//当前页所属章节页数
-    List<String> pagecontent;//当前页所属的章节内容
-    long novelCId;//当前章节小说所属id 用于获取下一章或上一章内容
-    long novelNId;//当前小说所属id 用于获取下一章或上一章内容
+    private int page;//当前页所属章节页数
+    private List<String> pagecontent;//当前页所属的章节内容
+    private String novelChapterUrl;//当前章节小说所属id 用于获取下一章或上一章内容
+    private String noveChapterListUrl;//当前小说所属id 用于获取下一章或上一章内容
 
 
     public void addContent(String s) {
@@ -33,19 +33,19 @@ public class NovelPageInfo {
         this.pagecontent = pagecontent;
     }
 
-    public long getNovelCId() {
-        return novelCId;
+    public String getNovelChapterUrl() {
+        return novelChapterUrl;
     }
 
-    public void setNovelCId(long novelCId) {
-        this.novelCId = novelCId;
+    public void setNovelChapterUrl(String novelChapterUrl) {
+        this.novelChapterUrl = novelChapterUrl;
     }
 
-    public long getNovelNId() {
-        return novelNId;
+    public String getNoveChapterListUrl() {
+        return noveChapterListUrl;
     }
 
-    public void setNovelNId(long novelNId) {
-        this.novelNId = novelNId;
+    public void setNoveChapterListUrl(String noveChapterListUrl) {
+        this.noveChapterListUrl = noveChapterListUrl;
     }
 }

@@ -2,6 +2,7 @@ package com.hao.novel.ui.activity;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.core.util.Pair;
 import androidx.core.view.ViewCompat;
 
 import com.hao.novel.R;
+import com.hao.novel.base.App;
 import com.hao.novel.base.BaseActivity;
 
 
@@ -31,13 +33,14 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // 隐藏状态栏
+        // 隐藏状态栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         Log.i("过程", "  onCreate");
         setContentView(R.layout.activity_welcome);
         findView();
+
     }
 
     private void findView() {
@@ -68,23 +71,23 @@ public class WelcomeActivity extends BaseActivity {
         if (valueAnimator == null) {
             valueAnimator = ValueAnimator.ofFloat(100);
         }
-        valueAnimator.setDuration(2000);
+        valueAnimator.setDuration(1000);
         valueAnimator.setInterpolator(new LinearInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float progress = (float) valueAnimator.getAnimatedValue();
-                Log.i("动画进度", progress + "");
+                Log.i("动画进度", progress + "   " + isJumpMian);
                 if (progress > 10 && progress < 75) {
                     novel_icon.setTranslationX(novel_icon.getWidth() * (progress / 75 - 1));
                     logo_text.setAlpha(progress / 75);
                 } else if (progress < 99) {
                     logo_advert.setVisibility(View.VISIBLE);
                 } else if (progress == 100) {
-                    animalIsStart = false;
-                    if (!isJumpMian) {
+                    if (animalIsStart && !isJumpMian) {
                         gotoMain();
                     }
+                    animalIsStart = false;
                 }
             }
         });
@@ -106,16 +109,22 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void gotoMain() {
-        isJumpMian = true;
-        View novel_icon = findViewById(R.id.novel_icon);
-        ViewCompat.setTransitionName(novel_icon, "avatar");
-        Intent intent = new Intent(this, MiBookActivity.class);
-        Pair<View, String> pair1 = new Pair<>((View) novel_icon, ViewCompat.getTransitionName(novel_icon));
-        /**
-         *4、生成带有共享元素的Bundle，这样系统才会知道这几个元素需要做动画
-         */
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair1);
-        ActivityCompat.startActivity(this, intent, activityOptionsCompat.toBundle());
+        synchronized (this) {
+            View novel_icon = findViewById(R.id.novel_icon);
+//        ViewCompat.setTransitionName(novel_icon, "avatar");
+            Intent intent = new Intent(this, MiNovelShelfActivity.class);
+            Pair<View, String> pair1 = new Pair<>(novel_icon, ViewCompat.getTransitionName(novel_icon));
+            /**
+             *4、生成带有共享元素的Bundle，这样系统才会知道这几个元素需要做动画
+             */
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1);
+            ActivityCompat.startActivity(this, intent, activityOptionsCompat.toBundle());
+            isJumpMian = true;
+        }
     }
+
+
+
+
 
 }

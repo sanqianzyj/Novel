@@ -29,6 +29,8 @@ public class SpiderUtils {
             }
             Log.i("解析地址", "url=" + url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(2000);
+            conn.setReadTimeout(2000);
             InputStreamReader isr = new InputStreamReader(conn.getInputStream());
             BufferedReader br = new BufferedReader(isr);
             String temp;

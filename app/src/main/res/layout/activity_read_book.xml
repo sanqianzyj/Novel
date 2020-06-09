@@ -1,47 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activity.ReadBookActivity">
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-
-        <com.hao.novel.view.minovelshow.PullViewLayout
-            android:id="@+id/novel_show"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.hao.novel.view.minovelshow.PullViewLayout>
+        android:orientation="vertical"
+        tools:context=".ui.activity.ReadNovelActivity">
 
         <LinearLayout
-            android:id="@+id/text_typeface_layout"
-            android:layout_width="150dp"
+            android:id="@+id/novel_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
+            <com.hao.novel.view.minovelshow.PullViewLayout
+                android:id="@+id/novel_show"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="选择字体"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"></com.hao.novel.view.minovelshow.PullViewLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/text_typeface"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:id="@+id/text_typeface_layout"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/mune_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="选择字体"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/text_typeface"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
         </LinearLayout>
+
+
+        <include layout="@layout/readbook_config" />
     </LinearLayout>
 
-    <include layout="@layout/readbook_config" />
-</LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mune"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="22dp">
+
+            <ImageView
+                android:id="@+id/selec_chapter"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@mipmap/shuji_black" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

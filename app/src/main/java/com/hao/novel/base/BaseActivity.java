@@ -1,5 +1,6 @@
 package com.hao.novel.base;
 
+import android.os.StrictMode;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +19,7 @@ public class BaseActivity extends MI2Activity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+
     }
 
     @Override

@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import com.hao.lib.Util.SystemUtil;
 import com.hao.lib.base.AppUtils;
 import com.hao.novel.base.App;
+import com.hao.novel.db.manage.DbManage;
+import com.hao.novel.ui.used.ReadInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +121,10 @@ public class PullViewLayout extends FrameLayout {
             return true;
         }
 
+        if (pullViewLayoutListener != null && pullViewLayoutListener.onTouch()) {
+            return super.onTouchEvent(event);
+        }
+
         if (getChildCount() > 0) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -176,7 +182,7 @@ public class PullViewLayout extends FrameLayout {
                             pullViewLayoutListener.onClickCenter();
                         }
                         return true;
-                    } else if (Math.abs(moveX - downX) < getWidth() / 5) {//滑动效果未生效
+                    } else if (Math.abs(moveX - downX) < 10) {//滑动效果未生效
                         initAnimal();
                         valueAnimator.removeAllUpdateListeners();
                         valueAnimator.addUpdateListener(now);
@@ -216,6 +222,7 @@ public class PullViewLayout extends FrameLayout {
             head.add(cachePage);
         }
 
+
         if (nextPage == null) {
             pullViewLayoutListener.needLoadDate(false);
         }
@@ -241,11 +248,11 @@ public class PullViewLayout extends FrameLayout {
             end.add(0, cachePage);
         }
 
+
         if (fristPage == null) {
             pullViewLayoutListener.needLoadDate(true);
         }
     }
-
 
     @Nullable
     ValueAnimator.AnimatorUpdateListener next = new ValueAnimator.AnimatorUpdateListener() {
@@ -347,6 +354,39 @@ public class PullViewLayout extends FrameLayout {
         cachePage = null;//缓存页 翻页后需要被移除的一页
     }
 
+    public void setPage(int page, List<View> views) {
+        int index = 0;
+        for (int i = 0; i < views.size(); i++) {
+            View v = views.get(i);
+            if (v instanceof NovelTextView) {
+                if (((NovelTextView) v).getNovelPageInfo().getPage() == page) {
+                    index = i;
+                    break;
+                }
+            } else if (v instanceof ViewGroup) {
+                for (int j = 0; j < ((ViewGroup) v).getChildCount(); j++) {
+                    if (((ViewGroup) v).getChildAt(j) instanceof NovelTextView) {
+                        if (((NovelTextView) ((ViewGroup) v).getChildAt(j)).getNovelPageInfo().getPage() == page) {
+                            index = i;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        head.addAll(views.subList(0, index));
+        initFirst();
+        end.addAll(views.subList(index, views.size()));
+        initContent();
+
+        if (nextPage == null) {
+            pullViewLayoutListener.needLoadDate(false);
+        }
+        if (fristPage == null) {
+            pullViewLayoutListener.needLoadDate(true);
+        }
+    }
+
 
     public interface PullViewLayoutListener {
         void noDate();
@@ -362,6 +402,8 @@ public class PullViewLayout extends FrameLayout {
         void noNext();
 
         void onClickCenter();
+
+        boolean onTouch();
     }
 
     public NovelTextView getContentMiTextPage() {
@@ -385,4 +427,6 @@ public class PullViewLayout extends FrameLayout {
         }
         return novelTextView;
     }
+
+
 }

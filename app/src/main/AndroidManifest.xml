@@ -16,6 +16,7 @@
     <application
         android:name=".base.App"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/shuji_black"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/shuji_black"
@@ -23,11 +24,7 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.activity.SearchNovelActivity"></activity>
-        <activity
-            android:name=".base.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/NoActionBar" />
-        <activity android:name=".ui.activity.ReadBookActivity" />
+        <activity android:name=".ui.activity.ReadNovelActivity" />
         <activity android:name=".ui.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,11 +32,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MiBookActivity" />
+        <activity android:name=".ui.activity.MiNovelShelfActivity" />
         <activity android:name=".ui.activity.NovelListActivity" />
-        <activity android:name=".ui.activity.BookDetailActivity" />
+        <activity android:name=".ui.activity.NovelDetailActivity" />
 
         <service android:name=".service.DownLoadNovelService" />
+        <receiver android:name=".broadcast.AlarmReceiver">
+            <intent-filter>
+                <action android:name="clock" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

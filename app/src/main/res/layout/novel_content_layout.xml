@@ -10,11 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:lines="1"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:textSize="12sp" />
 
     <com.hao.novel.view.minovelshow.NovelTextView
         android:id="@+id/novel_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 </LinearLayout>

@@ -1,10 +1,16 @@
 package com.hao.novel.view.minovelshow;
 
 import android.graphics.Typeface;
+import android.text.TextPaint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.hao.lib.Util.SystemUtil;
+import com.hao.lib.Util.TypeFaceUtils;
 import com.hao.novel.R;
 import com.hao.novel.base.App;
 import com.hao.novel.spider.data.NovelChapter;
@@ -31,6 +37,7 @@ public class MiTextViewConfig {
     float viewWidth = -1;//view的横向高度
     int textColor;
     Typeface typeface;
+    TextPaint textPaint;
 
     private MiTextViewConfig() {
     }
@@ -40,15 +47,17 @@ public class MiTextViewConfig {
     public static MiTextViewConfig getDefoutConfig() {
         if (miTextViewConfig == null) {
             miTextViewConfig = new MiTextViewConfig();
-            miTextViewConfig.textColor = 0xFFFFFF;
+            miTextViewConfig.textColor = ContextCompat.getColor(App.getInstance(), R.color.novel_text_defult);
             miTextViewConfig.textPadingVar = 0;
             miTextViewConfig.textPadingHor = 0;
-            miTextViewConfig.textPadingleft = 0;
-            miTextViewConfig.textPadingright = 0;
-            miTextViewConfig.textPadingtop = 0;
-            miTextViewConfig.textPadingbottom = 0;
-            miTextViewConfig.textSize = 70;
-            miTextViewConfig.typeface = Typeface.DEFAULT;
+            miTextViewConfig.textPadingleft = SystemUtil.dp2px(App.getInstance(), 5f);
+            miTextViewConfig.textPadingright = SystemUtil.dp2px(App.getInstance(), 5f);
+            miTextViewConfig.textPadingtop = SystemUtil.dp2px(App.getInstance(), 5f);
+            miTextViewConfig.textPadingbottom = SystemUtil.dp2px(App.getInstance(), 5f);
+            miTextViewConfig.setTextSize(SystemUtil.sp2px(App.getInstance(), 21f));
+            miTextViewConfig.setLineSpacingExtra(SystemUtil.sp2px(App.getInstance(), 11f));
+            miTextViewConfig.setWordSpacingExtra(SystemUtil.sp2px(App.getInstance(), 2f));
+            miTextViewConfig.typeface = TypeFaceUtils.getTypeFaceInfoList().get(0).getTypeface();
             miTextViewConfig.orientationVer = false;
         }
         return miTextViewConfig;
@@ -56,19 +65,9 @@ public class MiTextViewConfig {
 
     public static MiTextViewConfig getDefoutConfig(float viewWidth, float viewhigh) {
         if (miTextViewConfig == null) {
-            miTextViewConfig = new MiTextViewConfig();
-            miTextViewConfig.textColor = 0xFFFFFF;
-            miTextViewConfig.textPadingVar = 0;
-            miTextViewConfig.textPadingHor = 0;
-            miTextViewConfig.textPadingleft = 0;
-            miTextViewConfig.textPadingright = 0;
-            miTextViewConfig.textPadingtop = 0;
-            miTextViewConfig.textPadingbottom = 0;
-            miTextViewConfig.textSize = 70;
+            getDefoutConfig();
             miTextViewConfig.viewWidth = viewWidth;
             miTextViewConfig.viewhigh = viewhigh;
-            miTextViewConfig.typeface = Typeface.DEFAULT;
-            miTextViewConfig.orientationVer = false;
         } else {
             miTextViewConfig.viewWidth = viewWidth;
             miTextViewConfig.viewhigh = viewhigh;
@@ -95,15 +94,18 @@ public class MiTextViewConfig {
         //计算出去边缘距离和文字占用的位置剩余的位置 并计算出每页文字的位置
         //文本垂直方向距离边缘的位置  通过计算一行被填满时所占用的位置，算出空出的位置长度,主要用于文本居中处理
         textPadingVar = (textContentVar - lineNum * (textSize + lineSpacingExtra)) / 2;
-        offsetVar = textPadingVar + textPadingtop;
+        offsetVar = textPadingVar;
         //文本水平方向距离边缘的位置  通过计算一行被填满时所占用的位置，算出空出的位置长度,主要用于文本居中处理
-        textPadingHor = (textContentHor - lineTextNum * (textSize + wordSpacingExtra)) / 2;
+        textPadingHor = (textContentHor - lineTextNum * (textSize + wordSpacingExtra) + wordSpacingExtra) / 2;//由于最后一个字的位置中包含了一个间距 在调整文字位置时需要进行位置处理 所以需要+上wordSpacingExtra
         offsetHor = textPadingHor + textPadingleft;
+
+        Log.i("text", "边缘间距：" + textPadingVar + "             " + textPadingtop + "    文字：" + lineNum * (textSize + lineSpacingExtra) + "     总高度：" + textContentVar);
         return this;
     }
 
 
     public List<View> initText(NovelChapter novelChapter) {
+        Log.i("小说章节内容", novelChapter.getChapterContent());
         List<NovelPageInfo> pageDate = new ArrayList<>();
         List<String> textArray = new ArrayList<>();
         String[] strs = novelChapter.getChapterContent().split("\n");
@@ -131,25 +133,22 @@ public class MiTextViewConfig {
         }
         if (miTextViewConfig.lineNum != 0) {
             NovelPageInfo novelPageInfo = new NovelPageInfo();
-            novelPageInfo.novelCId = novelChapter.getCid();
-            novelPageInfo.novelNId = novelChapter.getNid();
-            novelPageInfo.setPage(0);
             for (int i = 0; i < textArray.size(); i++) {
                 if (i % miTextViewConfig.lineNum == 0) {
-                    if (novelPageInfo.pagecontent != null) {
-                        novelPageInfo.addContent(textArray.get(i));
-                        novelPageInfo.setPage(i / miTextViewConfig.lineNum);
-                        pageDate.add(novelPageInfo);
-                    }
                     novelPageInfo = new NovelPageInfo();
+                    novelPageInfo.setNovelChapterUrl(novelChapter.getChapterUrl());
+                    novelPageInfo.setNoveChapterListUrl(novelChapter.getNovelChapterListUrl());
+                    novelPageInfo.addContent(textArray.get(i));
+                    novelPageInfo.setPage(i / miTextViewConfig.lineNum);
+                    pageDate.add(novelPageInfo);
                 } else {
                     novelPageInfo.addContent(textArray.get(i));
-                    novelPageInfo.novelCId = novelChapter.getCid();
-                    novelPageInfo.novelNId = novelChapter.getNid();
+                    novelPageInfo.setNovelChapterUrl(novelChapter.getChapterUrl());
+                    novelPageInfo.setNoveChapterListUrl(novelChapter.getNovelChapterListUrl());
                     novelPageInfo.setPage(i / miTextViewConfig.lineNum);
                 }
             }
-            if (novelPageInfo.pagecontent != null && novelPageInfo.pagecontent.size() != 0) {
+            if (novelPageInfo.getPagecontent() != null && novelPageInfo.getPagecontent().size() != 0) {
                 pageDate.add(novelPageInfo);
             }
         }

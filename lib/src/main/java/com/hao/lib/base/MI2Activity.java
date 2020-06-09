@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -22,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.hao.lib.BuildConfig;
 import com.hao.lib.R;
 import com.hao.lib.Util.ImageUtils;
 import com.hao.lib.Util.StatusBarUtil;
@@ -40,6 +43,7 @@ public abstract class MI2Activity extends AppCompatActivity {
     public String getMI2TAG() {
         return MI2TAG;
     }
+
 
     /**
      * 添加loading布局
@@ -112,6 +116,10 @@ public abstract class MI2Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if(BuildConfig.DEBUG){
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
+        }
+
         if (checkCallingOrSelfPermission(PERMISSION_MI) != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("继承此activity需要权限");
         }

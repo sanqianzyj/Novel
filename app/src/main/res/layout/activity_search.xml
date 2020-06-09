@@ -8,14 +8,14 @@
     android:orientation="vertical"
     tools:context=".ui.activity.NovelListActivity">
 
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/novel_type"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/red"
         app:tabTextColor="@color/black"></com.google.android.material.tabs.TabLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/novel_list"
@@ -23,4 +23,6 @@
         android:layout_height="match_parent"
         android:background="@color/gray_11"
         android:paddingTop="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+
 </LinearLayout>

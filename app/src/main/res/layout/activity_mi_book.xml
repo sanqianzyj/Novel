@@ -6,56 +6,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.MiBookActivity">
+    tools:context=".ui.activity.MiNovelShelfActivity">
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/title_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/book_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/shuji_black"
+                android:transitionName="book" />
+
+            <ImageView
+                android:id="@+id/shop"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/setting"
+                android:src="@mipmap/shop" />
+
+            <ImageView
+                android:id="@+id/setting"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/setting" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mi_book_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        tools:ignore="MissingConstraints">
+        android:layout_below="@id/title_item" />
 
-        <ImageView
-            android:id="@+id/book_icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/shuji_black"
-            android:transitionName="book" />
 
-        <ImageView
-            android:id="@+id/shop"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toLeftOf="@+id/setting"
-            android:src="@mipmap/shop" />
-
-        <ImageView
-            android:id="@+id/setting"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/setting" />
-    </RelativeLayout>
-
-    <LinearLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/search"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
-        android:background="@drawable/shape_round_shadow"
-        android:gravity="center">
+        android:scaleType="centerInside"
+        app:fabSize="normal"
+        app:elevation="10dp"
+        app:rippleColor="@color/gray_dd"
+        app:backgroundTint="@color/white"
+        android:src="@mipmap/search" />
 
+    <FrameLayout
+        android:id="@+id/fl_warn"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:background="#70000000">
 
-        <ImageButton
-            android:id="@+id/search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:background="@drawable/ripple_bg"
-            android:src="@mipmap/search" />
-    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="所有小说来源均来自各个网站，本APP仅提供转载服务"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/iv_warn_close"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right"
+            android:paddingLeft="13dp"
+            android:paddingRight="8dp"
+            android:src="@mipmap/icon_close" />
+    </FrameLayout>
 </RelativeLayout>

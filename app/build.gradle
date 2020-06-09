@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -26,7 +26,7 @@ android {
 
 
 static def version() {
-    return 6
+    return 2
 }
 
 dependencies {
@@ -46,6 +46,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:design:28.1.1'
     implementation 'com.tencent:mmkv:1.0.19'
 }

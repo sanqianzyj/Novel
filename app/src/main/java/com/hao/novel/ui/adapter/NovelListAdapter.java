@@ -47,11 +47,7 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
      */
     boolean isNeedLoadAnimal = false;
 
-    /**
-     * 当前显示的小说列表页数 30本为一页 同步加载网页
-     */
-    //TODO 通过加载的网页进行控制
-    int page = 0;
+
 
     /**
      * 小说类型
@@ -74,6 +70,8 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
 
     public void setDate(List<NovelIntroduction> novelIntroductions) {
         this.novelIntroductions = novelIntroductions;
+        count=novelIntroductions==null?0:novelIntroductions.size();
+        notifyDataSetChanged();
     }
 
 
@@ -94,8 +92,8 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
         return new MuneViewHolder(v);
     }
 
-    public void setItemOnClickListener(AdapterView.OnItemClickListener onItemClickListener){
-        this.onItemClickListener=onItemClickListener;
+    public void setItemOnClickListener(AdapterView.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
 
@@ -121,19 +119,10 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
         }
     }
 
-    //
-    public void notifyData() {
-        if (page >= 0 && !type.equals("")) {
-            novelIntroductions = DbManage.getNovelByType(type, page);
-            count = novelIntroductions.size();
-        }
-        notifyDataSetChanged();
-    }
 
     public void setType(String type) {
         this.type = type;
     }
-
 
 
     class MuneViewHolder extends RecyclerView.ViewHolder {
@@ -168,15 +157,15 @@ public class NovelListAdapter extends RecyclerView.Adapter<NovelListAdapter.Mune
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemClick(null,view, (Integer) view.getTag(),view.getId());
+                    onItemClickListener.onItemClick(null, view, (Integer) view.getTag(), view.getId());
                 }
             });
         }
 
         public void setSize(View frisetitemView) {
-            if(frisetitemView!=null){
-                imageWidth=frisetitemView.getWidth();
-                imageHight=frisetitemView.getHeight();
+            if (frisetitemView != null) {
+                imageWidth = frisetitemView.getWidth();
+                imageHight = frisetitemView.getHeight();
             }
         }
     }

@@ -46,6 +46,22 @@ public class SystemUtil {
         return pxValue / scale + 0.5f;
     }
 
+    /**
+     * 根据手机的分辨率从 px(像素) 的单位 转成为 sp
+     */
+    public static float px2sp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (pxValue / fontScale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率从 sp 的单位 转成为 px
+     */
+    public static float sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (spValue * fontScale + 0.5f);
+    }
+
 
     /**
      * 计算点击的位置是否是 控件的范围

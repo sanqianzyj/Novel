@@ -171,7 +171,7 @@ public class DownLoadNovelService extends Service {
                             break;
                         case noveltypelist://通过类别来获取小说列表
                             NovelType novelType = (NovelType) tag.get(0).getObject();
-                            SpiderNovelFromBiQu.getTypeNovelList(novelType.getUrl(), novelType.getType());
+                            SpiderNovelFromBiQu.getTypeNovelList(novelType);
                             break;
                     }
                     if (tag.get(0).downListener != null) {
